@@ -4,4 +4,5 @@ Local field potentials are neuronal recordings  of in vivo and in in vitro anima
 ## Requirements
 *   Matlab Deep Learning and Network Designer Toobox
 *   Matlab 2020a
+
 Ing. Marcos Fabietti
