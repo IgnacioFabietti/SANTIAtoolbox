@@ -1033,7 +1033,7 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
 
         % Button pushed function: OpenSigMateButton
         function OpenSigMateButtonPushed(app, event)
-        dirSIG=which('FirstGUI.m');
+        dirSIG=which('SigMate/FirstGUI.m');
         %%%%control
         if isempty(dirSIG)==1
         msgbox('Change Path to SANTIA','Warning','warn');
