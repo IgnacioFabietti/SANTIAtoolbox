@@ -106,7 +106,7 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
         ClassifyButton_3                matlab.ui.control.StateButton
         SelectWindowListBoxLabel        matlab.ui.control.Label
         Label                           matlab.ui.control.Label
-        SigMateAdditionNeuronalToolforIdentificationofArtifactsLabel  matlab.ui.control.Label
+        SigMateAdvancedaNeuronalToolforIdentificationofArtifactsLabel  matlab.ui.control.Label
         Image                           matlab.ui.control.Image
     end
 
@@ -1033,7 +1033,7 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
 
         % Button pushed function: OpenSigMateButton
         function OpenSigMateButtonPushed(app, event)
-        dirSIG=which('SigMate/FirstGUI.m');
+        dirSIG=which('FirstGUI.m');
         %%%%control
         if isempty(dirSIG)==1
         msgbox('Change Path to SANTIA','Warning','warn');
@@ -1760,12 +1760,12 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             app.Label.Position = [211 743 101 22];
             app.Label.Text = 'S.A.N.T.I.A.';
 
-            % Create SigMateAdditionNeuronalToolforIdentificationofArtifactsLabel
-            app.SigMateAdditionNeuronalToolforIdentificationofArtifactsLabel = uilabel(app.UIFigure);
-            app.SigMateAdditionNeuronalToolforIdentificationofArtifactsLabel.FontWeight = 'bold';
-            app.SigMateAdditionNeuronalToolforIdentificationofArtifactsLabel.FontColor = [1 0.0745 0.651];
-            app.SigMateAdditionNeuronalToolforIdentificationofArtifactsLabel.Position = [77 722 356 22];
-            app.SigMateAdditionNeuronalToolforIdentificationofArtifactsLabel.Text = 'SigMate Addition Neuronal Tool for Identification of Artifacts';
+            % Create SigMateAdvancedaNeuronalToolforIdentificationofArtifactsLabel
+            app.SigMateAdvancedaNeuronalToolforIdentificationofArtifactsLabel = uilabel(app.UIFigure);
+            app.SigMateAdvancedaNeuronalToolforIdentificationofArtifactsLabel.FontWeight = 'bold';
+            app.SigMateAdvancedaNeuronalToolforIdentificationofArtifactsLabel.FontColor = [1 0.0745 0.651];
+            app.SigMateAdvancedaNeuronalToolforIdentificationofArtifactsLabel.Position = [70 722 383 22];
+            app.SigMateAdvancedaNeuronalToolforIdentificationofArtifactsLabel.Text = 'SigMate Advanced: a  Neuronal Tool for Identification of Artifacts';
 
             % Create Image
             app.Image = uiimage(app.UIFigure);
