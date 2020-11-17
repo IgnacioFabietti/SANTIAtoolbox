@@ -25,12 +25,13 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
         SelectChannelDropDownLabel      matlab.ui.control.Label
         SelectChannelDropDown           matlab.ui.control.DropDown
         UITable                         matlab.ui.control.Table
-        ThresholdSelectionTableButton   matlab.ui.control.Button
+        ThresTableButton                matlab.ui.control.Button
         ProgressPanel                   matlab.ui.container.Panel
         Label_2                         matlab.ui.control.Label
         SaveUnlabelledDataButton        matlab.ui.control.Button
         FormatforSigMateButton          matlab.ui.control.Button
         OpenSigMateButton               matlab.ui.control.Button
+        HistogramTheshButton            matlab.ui.control.Button
         NeuralNetworkTrainingTab        matlab.ui.container.Tab
         SaveResultsButton               matlab.ui.control.Button
         TrainingoptionsPanel            matlab.ui.container.Panel
@@ -324,8 +325,8 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             uisave('structured_data','structured_data.mat');
         end
 
-        % Button pushed function: ThresholdSelectionTableButton
-        function ThresholdSelectionTableButtonPushed(app, event)
+        % Button pushed function: ThresTableButton
+        function ThresTableButtonPushed(app, event)
             %%%FAILSAFE #1
             RawDataInput_ts=getappdata(0,'RawDataInput_t');
             if isempty(RawDataInput_ts)==1
@@ -422,10 +423,147 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
                 elseif app.mVButton_2.Value==1
                     axisPanel.YLabel.String = 'Amplitude (mV)';
                 elseif app.uVButton_2.Value==1
-                    axisPanel.YLabel.String = 'Amplitude (uv)';                       
+                    axisPanel.YLabel.String = 'Amplitude (uV)';                       
                 end
             end
         end
+        end
+
+        % Button pushed function: HistogramTheshButton
+        function HistogramTheshButtonPushed(app, event)
+        %%%FAILSAFE #1
+        RawDataInput_ts=getappdata(0,'RawDataInput_t');
+        if isempty(RawDataInput_ts)==1
+        errordlg('Nothing Generated','Error');
+        return
+        end
+        %%%%%%%%%%%%%LOAD DATA
+        tope=getappdata(0,'tope');
+        selectchannel=app.SelectChannelDropDown.Value;
+        from=(selectchannel-1)*tope+1;
+        to=(selectchannel)*tope;
+        RawDataInput_ts=RawDataInput_ts(from:to,:);
+        setappdata(0,'row_names_hist',RawDataInput_ts.Properties.RowNames);
+        %%%%%%%%%%%%%CREATE  FIGURE
+        fig_histogram = uifigure('Position',[100 100 459 736],'Name','Histogram Threshold Selection'); %OPEN FIGURE
+        dataforhist=table2array(RawDataInput_ts);
+        dataforhist=dataforhist(:,1);
+        %%%%%%HIDDEN ITEMS
+        % Create PowerDistributionLabel
+        PowerDistributionLabel = uilabel(fig_histogram);
+        PowerDistributionLabel.FontSize = 14;
+        PowerDistributionLabel.FontWeight = 'bold';
+        PowerDistributionLabel.Position = [183 694 130 33];
+        PowerDistributionLabel.Text = 'Power Distribution';
+        
+        % Create ListBoxLabel
+        ListBoxLabel = uilabel(fig_histogram);
+        ListBoxLabel.HorizontalAlignment = 'right';
+        ListBoxLabel.Position = [37 269 89 23];
+        ListBoxLabel.Text = 'Select Window';
+        ListBoxLabel.Visible=0;
+        
+        % Create ListBox
+        ListBox = uilistbox(fig_histogram);
+        ListBox.Multiselect = 'on';
+        ListBox.Position = [32 67 100 200];
+        ListBox.Items=RawDataInput_ts.Properties.RowNames;  
+        ListBox.ItemsData=linspace(1,size(dataforhist,1),size(dataforhist,1));
+        ListBox.Visible=0;
+        
+        % Create UIAxes_2
+        UIAxes_2 = uiaxes(fig_histogram);
+        UIAxes_2.Position = [151 67 286 225];
+        UIAxes_2.Visible=0;
+       
+        % Create PlotWindowButton
+        PlotWindowButton = uibutton(fig_histogram, 'push');
+        PlotWindowButton.Position = [165 9 123 41];
+        PlotWindowButton.Text = 'Plot Window';
+        PlotWindowButton.Visible=0;
+        PlotWindowButton.ButtonPushedFcn = createCallbackFcn(app, @Plot_Hist_Pushed, true);
+        
+        %%%%%%vISIBLE ITEMS        
+        % Create  HISTOGRAM UIAxes
+        Histplot = uiaxes(fig_histogram);
+        Histplot.Position = [18 428 419 267];
+        histogram(Histplot,dataforhist)
+                
+        % Create PowerThresholdSliderLabel
+        PowerThresholdSliderLabel = uilabel(fig_histogram);
+        PowerThresholdSliderLabel.HorizontalAlignment = 'right';
+        PowerThresholdSliderLabel.Position = [184 397 96 22];
+        PowerThresholdSliderLabel.Text = 'Power Threshold';
+        
+        % Create PowerThresholdSlider
+        PowerThresholdSlider = uislider(fig_histogram);
+        PowerThresholdSlider.Position = [32 385 394 3];
+        minhist=min(dataforhist);
+        maxhist=max(dataforhist);
+        PowerThresholdSlider.Limits=[minhist,maxhist];
+        PowerThresholdSlider.MajorTicksMode='auto';
+        PowerThresholdSlider.MinorTicksMode='auto';
+        PowerThresholdSlider.ValueChangedFcn = createCallbackFcn(app, @Slidermoved, true);
+        hist_index_val=PowerThresholdSlider.Value;
+        linea=xline(Histplot,hist_index_val,'--r','Threshold');
+        
+        % Create SetThresholdButton
+        SetThresholdButton = uibutton(fig_histogram, 'push');
+        SetThresholdButton.Position = [165 304 123 41];
+        SetThresholdButton.Text = 'Set Threshold';
+        SetThresholdButton.ButtonPushedFcn = createCallbackFcn(app, @SetThresholdButtonButtonPushed, true);
+        
+        function Slidermoved(app, ~)
+        delete(linea)
+        hist_index_val=PowerThresholdSlider.Value;
+        linea=xline(Histplot,hist_index_val,'--r','Threshold');
+        end
+                
+        function SetThresholdButtonButtonPushed(app, ~)
+        hist_index_val_def=PowerThresholdSlider.Value;
+        selectchannel=app.SelectChannelDropDown.Value;
+             if selectchannel<11
+             app.UITable.Data(1,selectchannel)=hist_index_val_def;
+             else
+             rowfortabledisplay=floor(selectchannel/10)+1;
+             columnfortabledisplay=rem(selectchannel,10);
+             app.UITable.Data(rowfortabledisplay,columnfortabledisplay)=hist_index_val_def;            
+             end
+        ListBoxLabel.Visible=1;
+        ListBox.Visible=1;
+        PlotWindowButton.Visible=1;
+        dirIm=which('done.png');
+        SetThresholdButton.Icon=dirIm;    
+        setappdata(0,'hist_index_val_def',hist_index_val_def);
+        end
+        
+        function Plot_Hist_Pushed(app, ~)
+        freq=getappdata(0,'freq');        
+        hist_index_val_def=getappdata(0,'hist_index_val_def');
+        selectedwindowforplot=ListBox.Value;    
+        selectedwindow=table2array(RawDataInput_ts(selectedwindowforplot,2:end));
+        if dataforhist(selectedwindowforplot)<=hist_index_val_def
+        color_4_plot='g';
+        else
+        color_4_plot='r';  
+        end
+        signallength=size(selectedwindow,2);%%%%%ADD SCALES
+        x1=linspace(1,signallength,signallength);
+        x1=x1/app.SamplingFrequencyEditField.Value;
+        plot(UIAxes_2,x1,selectedwindow,'Color',color_4_plot)
+        if app.VButton_2.Value==1              
+            UIAxes_2.YLabel.String = 'Amplitude (V)';
+        elseif app.mVButton_2.Value==1
+            UIAxes_2.YLabel.String = 'Amplitude (mV)';
+        elseif app.uVButton_2.Value==1
+            UIAxes_2.YLabel.String = 'Amplitude (uV)';                       
+        end
+        UIAxes_2.XLabel.String = 'Time (s)';
+        drawnow    
+        UIAxes_2.Visible=1;
+        end
+
+
         end
 
         % Cell selection callback: UITable
@@ -867,6 +1005,26 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             app.Label_3.Text='Matrix Saved';
         end
 
+        % Button pushed function: OpenSigMateButton
+        function OpenSigMateButtonPushed(app, event)
+        wkdir='SigMate';
+        fname='FirstGUI.m';
+        if isfile(fullfile(wkdir,fname))
+            run(fullfile(wkdir,fname))
+        else
+            msgbox('Change Path to SANTIA','Warning','warn');
+            return
+        end
+%         dirSIG=which('FirstGUI.m');
+%         %%%%control
+%         if isempty(dirSIG)==1
+%         msgbox('Change Path to SANTIA','Warning','warn');
+%         return
+%         else
+%         run(dirSIG)
+%         end
+        end
+
         % Button pushed function: LoadTrainedNetButton
         function LoadTrainedNetButtonPushed(app, event)
             app.Label_4.Visible='off';
@@ -892,6 +1050,16 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
                 msgbox('Load Cancelled','Warning','warn');
             return
             end         
+        end
+
+        % Value changed function: ChooseNetworkDropDown_3
+        function ChooseNetworkDropDown_3ValueChanged(app, event)
+            value = str2num(app.ChooseNetworkDropDown_3.Value);
+            if value==2
+                app.TrainingoptionsPanel.Visible='off';
+            else
+                app.TrainingoptionsPanel.Visible='on';
+            end
         end
 
         % Button pushed function: LoadUnlabelledDataButton_3
@@ -1019,36 +1187,6 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             NEWDATAclassificationresults.labels=predicted_labels;
             uisave('NEWDATAclassificationresults','NEWDATAclassificationresults');
             app.Label_4.Text='Classification results saved';
-        end
-
-        % Value changed function: ChooseNetworkDropDown_3
-        function ChooseNetworkDropDown_3ValueChanged(app, event)
-            value = str2num(app.ChooseNetworkDropDown_3.Value);
-            if value==2
-                app.TrainingoptionsPanel.Visible='off';
-            else
-                app.TrainingoptionsPanel.Visible='on';
-            end
-        end
-
-        % Button pushed function: OpenSigMateButton
-        function OpenSigMateButtonPushed(app, event)
-        wkdir='SigMate';
-        fname='FirstGUI.m';
-        if isfile(fullfile(wkdir,fname))
-            run(fullfile(wkdir,fname))
-        else
-            msgbox('Change Path to SANTIA','Warning','warn');
-            return
-        end
-%         dirSIG=which('FirstGUI.m');
-%         %%%%control
-%         if isempty(dirSIG)==1
-%         msgbox('Change Path to SANTIA','Warning','warn');
-%         return
-%         else
-%         run(dirSIG)
-%         end
         end
     end
 
@@ -1187,13 +1325,13 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             % Create SelectChannelDropDownLabel
             app.SelectChannelDropDownLabel = uilabel(app.DataLabellingTab);
             app.SelectChannelDropDownLabel.HorizontalAlignment = 'right';
-            app.SelectChannelDropDownLabel.Position = [57 276 87 22];
+            app.SelectChannelDropDownLabel.Position = [9 275 87 22];
             app.SelectChannelDropDownLabel.Text = 'Select Channel';
 
             % Create SelectChannelDropDown
             app.SelectChannelDropDown = uidropdown(app.DataLabellingTab);
             app.SelectChannelDropDown.Items = {'Channel 1'};
-            app.SelectChannelDropDown.Position = [159 276 100 22];
+            app.SelectChannelDropDown.Position = [111 275 100 22];
             app.SelectChannelDropDown.Value = 'Channel 1';
 
             % Create UITable
@@ -1205,12 +1343,12 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             app.UITable.Tag = 'thresholddisplay';
             app.UITable.Position = [7 69 510 155];
 
-            % Create ThresholdSelectionTableButton
-            app.ThresholdSelectionTableButton = uibutton(app.DataLabellingTab, 'push');
-            app.ThresholdSelectionTableButton.ButtonPushedFcn = createCallbackFcn(app, @ThresholdSelectionTableButtonPushed, true);
-            app.ThresholdSelectionTableButton.Tooltip = {'Allows for threshold selection and plot'};
-            app.ThresholdSelectionTableButton.Position = [336 268 152 39];
-            app.ThresholdSelectionTableButton.Text = 'Threshold Selection Table';
+            % Create ThresTableButton
+            app.ThresTableButton = uibutton(app.DataLabellingTab, 'push');
+            app.ThresTableButton.ButtonPushedFcn = createCallbackFcn(app, @ThresTableButtonPushed, true);
+            app.ThresTableButton.Tooltip = {'Allows for threshold selection and plot'};
+            app.ThresTableButton.Position = [262 267 114 39];
+            app.ThresTableButton.Text = 'Thres. Table';
 
             % Create ProgressPanel
             app.ProgressPanel = uipanel(app.DataLabellingTab);
@@ -1233,7 +1371,7 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             app.SaveUnlabelledDataButton = uibutton(app.DataLabellingTab, 'push');
             app.SaveUnlabelledDataButton.ButtonPushedFcn = createCallbackFcn(app, @SaveUnlabelledDataButtonPushed, true);
             app.SaveUnlabelledDataButton.Tooltip = {'Choose a directory to save the unlabelled matrix'};
-            app.SaveUnlabelledDataButton.Position = [337 327 151 38];
+            app.SaveUnlabelledDataButton.Position = [307 327 151 38];
             app.SaveUnlabelledDataButton.Text = 'Save Unlabelled Data';
 
             % Create FormatforSigMateButton
@@ -1252,8 +1390,15 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             app.OpenSigMateButton.FontWeight = 'bold';
             app.OpenSigMateButton.FontColor = [0.7412 0.2784 0.0824];
             app.OpenSigMateButton.Tooltip = {'Run Sigmate Toolbox'};
-            app.OpenSigMateButton.Position = [336 384 152 38];
+            app.OpenSigMateButton.Position = [307 384 152 38];
             app.OpenSigMateButton.Text = 'Open SigMate';
+
+            % Create HistogramTheshButton
+            app.HistogramTheshButton = uibutton(app.DataLabellingTab, 'push');
+            app.HistogramTheshButton.ButtonPushedFcn = createCallbackFcn(app, @HistogramTheshButtonPushed, true);
+            app.HistogramTheshButton.Tooltip = {'Allows for threshold selection and plot'};
+            app.HistogramTheshButton.Position = [400 267 114 39];
+            app.HistogramTheshButton.Text = 'Histogram Thesh.';
 
             % Create NeuralNetworkTrainingTab
             app.NeuralNetworkTrainingTab = uitab(app.TabGroup);
