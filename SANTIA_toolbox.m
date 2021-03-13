@@ -264,7 +264,7 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             tope=floor(size(RawDataInput_g,2)/width_m); %%know the amount of window per channel
             r = rem(size(RawDataInput_g,2),width_m); %%leftover not included
             RawDataInput_g=RawDataInput_g(:,1:end-r); %%remove leftover
-            RawDataInput_g=reshape(RawDataInput_g,[],width_m); %%reshape
+            RawDataInput_g=reshape(RawDataInput_g',width_m,[])'; %%reshape
                         
             %%%%%%%%%%%MEMORYCHECK
             maxMemFrac = 0.8; %# I want to use at most 80% of the available memory
