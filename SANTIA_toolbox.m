@@ -3,112 +3,183 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
     % Properties that correspond to app components
     properties (Access = public)
         UIFigure                        matlab.ui.Figure
+        Image                           matlab.ui.control.Image
+        SigMateAdvancedaNeuronalToolforIdentificationofArtifactsLabel  matlab.ui.control.Label
+        Label                           matlab.ui.control.Label
         TabGroup                        matlab.ui.container.TabGroup
         DataLabellingTab                matlab.ui.container.Tab
-        LoadSignalsButton               matlab.ui.control.StateButton
-        GenerateAnalysisMatrixButton    matlab.ui.control.Button
-        SamplingFrequencyEditFieldLabel  matlab.ui.control.Label
-        SamplingFrequencyEditField      matlab.ui.control.NumericEditField
-        UnitofRecordingsButtonGroup     matlab.ui.container.ButtonGroup
-        VButton                         matlab.ui.control.RadioButton
-        mVButton                        matlab.ui.control.RadioButton
-        uVButton                        matlab.ui.control.RadioButton
-        LabelTableButton                matlab.ui.control.Button
-        WindowLength                    matlab.ui.control.Label
-        WindowLengthEditField_2         matlab.ui.control.NumericEditField
-        ScaleButtonGroup                matlab.ui.container.ButtonGroup
-        VButton_2                       matlab.ui.control.RadioButton
-        mVButton_2                      matlab.ui.control.RadioButton
-        uVButton_2                      matlab.ui.control.RadioButton
-        SelectedThresholdValuesLabel    matlab.ui.control.Label
-        SaveButton                      matlab.ui.control.Button
-        SelectChannelDropDownLabel      matlab.ui.control.Label
-        SelectChannelDropDown           matlab.ui.control.DropDown
-        UITable                         matlab.ui.control.Table
-        ThresTableButton                matlab.ui.control.Button
+        HistogramTheshButton            matlab.ui.control.Button
+        OpenSigMateButton               matlab.ui.control.Button
+        FormatforSigMateButton          matlab.ui.control.Button
+        SaveUnlabelledDataButton        matlab.ui.control.Button
         ProgressPanel                   matlab.ui.container.Panel
         Label_2                         matlab.ui.control.Label
-        SaveUnlabelledDataButton        matlab.ui.control.Button
-        FormatforSigMateButton          matlab.ui.control.Button
-        OpenSigMateButton               matlab.ui.control.Button
-        HistogramTheshButton            matlab.ui.control.Button
+        ThresTableButton                matlab.ui.control.Button
+        UITable                         matlab.ui.control.Table
+        SelectChannelDropDown           matlab.ui.control.DropDown
+        SelectChannelDropDownLabel      matlab.ui.control.Label
+        SaveButton                      matlab.ui.control.Button
+        SelectedThresholdValuesLabel    matlab.ui.control.Label
+        ScaleButtonGroup                matlab.ui.container.ButtonGroup
+        uVButton_2                      matlab.ui.control.RadioButton
+        mVButton_2                      matlab.ui.control.RadioButton
+        VButton_2                       matlab.ui.control.RadioButton
+        WindowLengthEditField_2         matlab.ui.control.NumericEditField
+        WindowLength                    matlab.ui.control.Label
+        LabelTableButton                matlab.ui.control.Button
+        UnitofRecordingsButtonGroup     matlab.ui.container.ButtonGroup
+        uVButton                        matlab.ui.control.RadioButton
+        mVButton                        matlab.ui.control.RadioButton
+        VButton                         matlab.ui.control.RadioButton
+        SamplingFrequencyEditField      matlab.ui.control.NumericEditField
+        SamplingFrequencyEditFieldLabel  matlab.ui.control.Label
+        GenerateAnalysisMatrixButton    matlab.ui.control.Button
+        LoadSignalsButton               matlab.ui.control.StateButton
         NeuralNetworkTrainingTab        matlab.ui.container.Tab
-        SaveResultsButton               matlab.ui.control.Button
+        ProgressPanel_2                 matlab.ui.container.Panel
+        Label_3                         matlab.ui.control.Label
+        TrainingDataPanel_2             matlab.ui.container.Panel
+        BalanceDataCheckBox             matlab.ui.control.CheckBox
+        SplitButton                     matlab.ui.control.Button
+        TestEditField                   matlab.ui.control.NumericEditField
+        TestEditFieldLabel              matlab.ui.control.Label
+        ValidationEditField             matlab.ui.control.NumericEditField
+        ValidationEditFieldLabel        matlab.ui.control.Label
+        TrainingEditField               matlab.ui.control.NumericEditField
+        TrainingEditFieldLabel          matlab.ui.control.Label
+        LoadTrainingDataButton          matlab.ui.control.Button
+        NetworkTrainingPanel            matlab.ui.container.Panel
+        TestSetResultsPlotDropDown      matlab.ui.control.DropDown
+        TestSetResultsPlotLabel         matlab.ui.control.Label
+        TestSetResultsButton            matlab.ui.control.Button
+        CreateNetworkButton             matlab.ui.control.Button
+        ChooseNetworkDropDown_3         matlab.ui.control.DropDown
+        ChooseNetworkDropDown_3Label    matlab.ui.control.Label
+        TrainNetworkButton              matlab.ui.control.Button
         TrainingoptionsPanel            matlab.ui.container.Panel
         TabGroup2                       matlab.ui.container.TabGroup
         BasicTab                        matlab.ui.container.Tab
-        PlotCheckBox                    matlab.ui.control.CheckBox
-        ExecutionEnviromentDropDownLabel  matlab.ui.control.Label
-        ExecutionEnviromentDropDown     matlab.ui.control.DropDown
-        SolverDropDownLabel             matlab.ui.control.Label
-        SolverDropDown                  matlab.ui.control.DropDown
-        InitialLearnRateSpinnerLabel    matlab.ui.control.Label
-        InitialLearnRateSpinner         matlab.ui.control.Spinner
-        ValidationFrequencySpinnerLabel  matlab.ui.control.Label
-        ValidationFrequencySpinner      matlab.ui.control.Spinner
-        MaxEpochsSpinnerLabel           matlab.ui.control.Label
-        MaxEpochsSpinner                matlab.ui.control.Spinner
-        MiniBatchSizeSpinnerLabel       matlab.ui.control.Label
-        MiniBatchSizeSpinner            matlab.ui.control.Spinner
-        VerboseCheckBox                 matlab.ui.control.CheckBox
-        VerboseFrequencySpinnerLabel    matlab.ui.control.Label
         VerboseFrequencySpinner         matlab.ui.control.Spinner
+        VerboseFrequencySpinnerLabel    matlab.ui.control.Label
+        VerboseCheckBox                 matlab.ui.control.CheckBox
+        MiniBatchSizeSpinner            matlab.ui.control.Spinner
+        MiniBatchSizeSpinnerLabel       matlab.ui.control.Label
+        MaxEpochsSpinner                matlab.ui.control.Spinner
+        MaxEpochsSpinnerLabel           matlab.ui.control.Label
+        ValidationFrequencySpinner      matlab.ui.control.Spinner
+        ValidationFrequencySpinnerLabel  matlab.ui.control.Label
+        InitialLearnRateSpinner         matlab.ui.control.Spinner
+        InitialLearnRateSpinnerLabel    matlab.ui.control.Label
+        SolverDropDown                  matlab.ui.control.DropDown
+        SolverDropDownLabel             matlab.ui.control.Label
+        ExecutionEnviromentDropDown     matlab.ui.control.DropDown
+        ExecutionEnviromentDropDownLabel  matlab.ui.control.Label
+        PlotCheckBox                    matlab.ui.control.CheckBox
         AdvancedoptionalTab             matlab.ui.container.Tab
-        L2RegularizationSpinnerLabel    matlab.ui.control.Label
-        L2RegularizationSpinner         matlab.ui.control.Spinner
-        GradientThresholdMethodDropDownLabel  matlab.ui.control.Label
-        GradientThresholdMethodDropDown  matlab.ui.control.DropDown
-        ResetInputNormalizationCheckBox  matlab.ui.control.CheckBox
-        GradientThresholdSpinnerLabel   matlab.ui.control.Label
-        GradientThresholdSpinner        matlab.ui.control.Spinner
-        ValidationPatienceLabel         matlab.ui.control.Label
-        ValidationPatienceSpinner       matlab.ui.control.Spinner
-        ShuffleDropDownLabel            matlab.ui.control.Label
-        ShuffleDropDown                 matlab.ui.control.DropDown
-        LearnRateScheduleDropDownLabel  matlab.ui.control.Label
-        LearnRateScheduleDropDown       matlab.ui.control.DropDown
-        LearnRateDropFactorSpinnerLabel  matlab.ui.control.Label
-        LearnRateDropFactorSpinner      matlab.ui.control.Spinner
-        LearnRateDropPeriodSpinnerLabel  matlab.ui.control.Label
-        LearnRateDropPeriodSpinner      matlab.ui.control.Spinner
-        MomentumSpinnerLabel            matlab.ui.control.Label
         MomentumSpinner                 matlab.ui.control.Spinner
-        NetworkTrainingPanel            matlab.ui.container.Panel
-        TrainNetworkButton              matlab.ui.control.Button
-        ChooseNetworkDropDown_3Label    matlab.ui.control.Label
-        ChooseNetworkDropDown_3         matlab.ui.control.DropDown
-        CreateNetworkButton             matlab.ui.control.Button
-        TestSetResultsButton            matlab.ui.control.Button
-        TestSetResultsPlotLabel         matlab.ui.control.Label
-        TestSetResultsPlotDropDown      matlab.ui.control.DropDown
-        TrainingDataPanel_2             matlab.ui.container.Panel
-        LoadTrainingDataButton          matlab.ui.control.Button
-        TrainingEditFieldLabel          matlab.ui.control.Label
-        TrainingEditField               matlab.ui.control.NumericEditField
-        ValidationEditFieldLabel        matlab.ui.control.Label
-        ValidationEditField             matlab.ui.control.NumericEditField
-        TestEditFieldLabel              matlab.ui.control.Label
-        TestEditField                   matlab.ui.control.NumericEditField
-        SplitButton                     matlab.ui.control.Button
-        BalanceDataCheckBox             matlab.ui.control.CheckBox
-        ProgressPanel_2                 matlab.ui.container.Panel
-        Label_3                         matlab.ui.control.Label
+        MomentumSpinnerLabel            matlab.ui.control.Label
+        LearnRateDropPeriodSpinner      matlab.ui.control.Spinner
+        LearnRateDropPeriodSpinnerLabel  matlab.ui.control.Label
+        LearnRateDropFactorSpinner      matlab.ui.control.Spinner
+        LearnRateDropFactorSpinnerLabel  matlab.ui.control.Label
+        LearnRateScheduleDropDown       matlab.ui.control.DropDown
+        LearnRateScheduleDropDownLabel  matlab.ui.control.Label
+        ShuffleDropDown                 matlab.ui.control.DropDown
+        ShuffleDropDownLabel            matlab.ui.control.Label
+        ValidationPatienceSpinner       matlab.ui.control.Spinner
+        ValidationPatienceLabel         matlab.ui.control.Label
+        GradientThresholdSpinner        matlab.ui.control.Spinner
+        GradientThresholdSpinnerLabel   matlab.ui.control.Label
+        ResetInputNormalizationCheckBox  matlab.ui.control.CheckBox
+        GradientThresholdMethodDropDown  matlab.ui.control.DropDown
+        GradientThresholdMethodDropDownLabel  matlab.ui.control.Label
+        L2RegularizationSpinner         matlab.ui.control.Spinner
+        L2RegularizationSpinnerLabel    matlab.ui.control.Label
+        SaveResultsButton               matlab.ui.control.Button
         ClassifyNewUnlabelledDataTab    matlab.ui.container.Tab
-        UIAxes                          matlab.ui.control.UIAxes
-        ClassificationResultLabel       matlab.ui.control.Label
-        SelectWindowListBox             matlab.ui.control.ListBox
-        PlotandShowClassButton          matlab.ui.control.Button
+        SelectWindowListBoxLabel        matlab.ui.control.Label
+        ClassifyButton_3                matlab.ui.control.StateButton
+        LoadUnlabelledDataButton_3      matlab.ui.control.Button
+        LoadTrainedNetButton            matlab.ui.control.Button
+        SaveButton_2                    matlab.ui.control.Button
+        NormalLabel                     matlab.ui.control.Label
         ProgressPanel_3                 matlab.ui.container.Panel
         Label_4                         matlab.ui.control.Label
-        NormalLabel                     matlab.ui.control.Label
-        SaveButton_2                    matlab.ui.control.Button
-        LoadTrainedNetButton            matlab.ui.control.Button
-        LoadUnlabelledDataButton_3      matlab.ui.control.Button
-        ClassifyButton_3                matlab.ui.control.StateButton
-        SelectWindowListBoxLabel        matlab.ui.control.Label
-        Label                           matlab.ui.control.Label
-        SigMateAdvancedaNeuronalToolforIdentificationofArtifactsLabel  matlab.ui.control.Label
-        Image                           matlab.ui.control.Image
+        PlotandShowClassButton          matlab.ui.control.Button
+        SelectWindowListBox             matlab.ui.control.ListBox
+        ClassificationResultLabel       matlab.ui.control.Label
+        UIAxes                          matlab.ui.control.UIAxes
+        ArtifactRemovalTab              matlab.ui.container.Tab
+        SelectChannelDropDown_2         matlab.ui.control.DropDown
+        SelectChannelDropDown_2Label    matlab.ui.control.Label
+        ProgressPanel_4                 matlab.ui.container.Panel
+        Label_5                         matlab.ui.control.Label
+        TrainingDataPanel_3             matlab.ui.container.Panel
+        SegmentLengthmSEditField        matlab.ui.control.NumericEditField
+        SegmentLengthmSEditFieldLabel   matlab.ui.control.Label
+        ExtractArtifactfreeSegmentsButton  matlab.ui.control.Button
+        LoadTrainingDataButton_2        matlab.ui.control.Button
+        NetworkTrainingPanel_2          matlab.ui.container.Panel
+        SequenceLengthPanel             matlab.ui.container.Panel
+        DataforModelTestingEditField    matlab.ui.control.NumericEditField
+        DataforModelTestingLabel        matlab.ui.control.Label
+        UnitButtonGroup                 matlab.ui.container.ButtonGroup
+        DatapointsButton                matlab.ui.control.RadioButton
+        mSButton                        matlab.ui.control.RadioButton
+        NNOutputEditField               matlab.ui.control.NumericEditField
+        NNOutputEditFieldLabel          matlab.ui.control.Label
+        NNInputEditField                matlab.ui.control.NumericEditField
+        NNInputEditFieldLabel           matlab.ui.control.Label
+        PlotchannelButton               matlab.ui.control.Button
+        ReplaceSegmentsButton           matlab.ui.control.Button
+        TestEditField_2                 matlab.ui.control.NumericEditField
+        TestEditField_2Label            matlab.ui.control.Label
+        ValidationEditField_2           matlab.ui.control.NumericEditField
+        ValidationEditField_2Label      matlab.ui.control.Label
+        TrainingEditField_2             matlab.ui.control.NumericEditField
+        TrainingEditField_2Label        matlab.ui.control.Label
+        ViewTestResultsButton           matlab.ui.control.Button
+        TrainNetworkButton_2            matlab.ui.control.Button
+        TrainingoptionsPanel_2          matlab.ui.container.Panel
+        TabGroup2_2                     matlab.ui.container.TabGroup
+        BasicTab_2                      matlab.ui.container.Tab
+        VerboseFrequencySpinner_2       matlab.ui.control.Spinner
+        VerboseFrequencySpinner_2Label  matlab.ui.control.Label
+        VerboseCheckBox_2               matlab.ui.control.CheckBox
+        MiniBatchSizeSpinner_2          matlab.ui.control.Spinner
+        MiniBatchSizeSpinner_2Label     matlab.ui.control.Label
+        MaxEpochsSpinner_2              matlab.ui.control.Spinner
+        MaxEpochsSpinner_2Label         matlab.ui.control.Label
+        ValidationFrequencySpinner_2    matlab.ui.control.Spinner
+        ValidationFrequencySpinner_2Label  matlab.ui.control.Label
+        InitialLearnRateSpinner_2       matlab.ui.control.Spinner
+        InitialLearnRateSpinner_2Label  matlab.ui.control.Label
+        SolverDropDown_2                matlab.ui.control.DropDown
+        SolverDropDown_2Label           matlab.ui.control.Label
+        ExecutionEnviromentDropDown_2   matlab.ui.control.DropDown
+        ExecutionEnviromentDropDown_2Label  matlab.ui.control.Label
+        PlotCheckBox_2                  matlab.ui.control.CheckBox
+        AdvancedoptionalTab_2           matlab.ui.container.Tab
+        MomentumSpinner_2               matlab.ui.control.Spinner
+        MomentumSpinner_2Label          matlab.ui.control.Label
+        LearnRateDropPeriodSpinner_2    matlab.ui.control.Spinner
+        LearnRateDropPeriodSpinner_2Label  matlab.ui.control.Label
+        LearnRateDropFactorSpinner_2    matlab.ui.control.Spinner
+        LearnRateDropFactorSpinner_2Label  matlab.ui.control.Label
+        LearnRateScheduleDropDown_2     matlab.ui.control.DropDown
+        LearnRateScheduleDropDown_2Label  matlab.ui.control.Label
+        ShuffleDropDown_2               matlab.ui.control.DropDown
+        ShuffleDropDown_2Label          matlab.ui.control.Label
+        ValidationPatienceSpinner_2     matlab.ui.control.Spinner
+        ValidationPatienceSpinner_2Label  matlab.ui.control.Label
+        GradientThresholdSpinner_2      matlab.ui.control.Spinner
+        GradientThresholdSpinner_2Label  matlab.ui.control.Label
+        ResetInputNormalizationCheckBox_2  matlab.ui.control.CheckBox
+        GradientThresholdMethodDropDown_2  matlab.ui.control.DropDown
+        GradientThresholdMethodDropDown_2Label  matlab.ui.control.Label
+        L2RegularizationSpinner_2       matlab.ui.control.Spinner
+        L2RegularizationSpinner_2Label  matlab.ui.control.Label
+        SaveResultsButton_2             matlab.ui.control.Button
     end
 
     % Callbacks that handle component events
@@ -1188,6 +1259,374 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             uisave('NEWDATAclassificationresults','NEWDATAclassificationresults');
             app.Label_4.Text='Classification results saved';
         end
+
+        % Button pushed function: LoadTrainingDataButton_2
+        function LoadTrainingDataButton_2Pushed(app, event)
+            %%%CLEAR ALL VARS
+            app.Label_5.Visible=0;
+            appdata = get(0,'ApplicationData');
+            fns = fieldnames(appdata);
+            for ii = 1:numel(fns)
+            rmappdata(0,fns{ii});
+            end
+            %%%%%LOAD            
+            [filename,pathname,filterindex] = uigetfile('*.mat');
+            % if the user presses CANCEL then zero is returned so ensure character 
+            % filename
+            % if the user selects a filter other than the one we set (index==1) then
+            % ignore the selected file
+            if ischar(filename) && filterindex==1
+            datInMat = whos('-file',fullfile(pathname,filename));
+            if  strcmp(datInMat(1).name,'structured_data')==1
+            NNTrainingInput_D=load(fullfile(pathname,filename),datInMat(1).name);
+            loaded_file_name= NNTrainingInput_D.(datInMat(1).name).filename;                   
+            loaded_labelled_data= NNTrainingInput_D.(datInMat(1).name).Data;   
+            loaded_thresh=NNTrainingInput_D.structured_data.ThresholdperChannel;
+            loaded_wl=NNTrainingInput_D.(datInMat(1).name).WindowLength;
+            loaded_sf=NNTrainingInput_D.(datInMat(1).name).SamplingFrequency;
+            loaded_scale=NNTrainingInput_D.(datInMat(1).name).Scale;
+            wind_dat_point=loaded_wl*loaded_sf;
+            %%%%save them as var for later
+            setappdata(0,'loaded_labelled_data',loaded_labelled_data);
+            setappdata(0,'loaded_file_name',loaded_file_name);
+            setappdata(0,'loaded_thresh',loaded_thresh);
+            setappdata(0,'loaded_wl',loaded_wl);
+            setappdata(0,'loaded_sf',loaded_sf);
+            setappdata(0,'loaded_scale', loaded_scale);
+            setappdata(0,'wind_dat_point',wind_dat_point);
+            app.Label_5.Visible=1;
+            app.Label_5.Text='Training Data Loaded';
+            
+            %%%%NUMBER OF CHANNELS FOR TABLE AND DROP DOWN ITEMS
+            number_of_channels=size(loaded_thresh,2); 
+            channellist=strings;
+            for p=1:number_of_channels
+                p_st=num2str(p); 
+                channellist(p)=strcat('channel_',p_st);
+                chval(p)=p;
+            end
+            app.SelectChannelDropDown_2.Items=channellist;
+            app.SelectChannelDropDown_2.ItemsData=chval;
+            
+            else
+            msgbox('Please select a file with data structured for traning','Warning','warn');
+            end
+            else
+            msgbox('Load Cancelled','Warning','warn');
+            return
+            end
+                        
+        end
+
+        % Button pushed function: ExtractArtifactfreeSegmentsButton
+        function ExtractArtifactfreeSegmentsButtonPushed(app, event)
+            labelled_table=getappdata(0,'loaded_labelled_data');%load table
+            %%%FAILSAFE #1
+            if isempty(labelled_table)==1
+                errordlg('Data not loaded','Error');
+                return
+            end
+            %%%failsafe 2
+            value = app.SegmentLengthmSEditField.Value;                       
+            wl=getappdata(0,'loaded_wl')*1000;
+            r= rem(value,wl);
+            if r~=0
+                errordlg('Must be multiple of the window length used for labelling','Error');
+                return
+            end
+            %%%%%%%
+            threshold_per_bin_per_ch=labelled_table(:,end);            
+            threshold_per_bin_per_ch=table2array(threshold_per_bin_per_ch); %get labels
+            ThresholdperChannel=getappdata(0,'loaded_thresh');                
+            row_channel_indx=size(ThresholdperChannel,2); 
+            threshold_per_bin_per_ch=reshape(threshold_per_bin_per_ch',[],row_channel_indx)';%reshape
+            labelled_signals=table2array(labelled_table(:,1:end-1)); %get signal
+            labelled_signals=reshape(labelled_signals',[], row_channel_indx)'; %reshape
+            window_length=getappdata(0,'loaded_wl');
+            labelrows=size(threshold_per_bin_per_ch,1);
+            labelcols=size(threshold_per_bin_per_ch,2);
+            storage=[];
+            numberofwindows=app.SegmentLengthmSEditField.Value/(window_length*1000);
+            h = waitbar(0,'Extracting Segments');
+                for j=1:labelrows
+                    NORMCOUNT=0;
+                    for k=1:labelcols
+                        if   threshold_per_bin_per_ch(j,k)==0
+                            NORMCOUNT=NORMCOUNT+1;
+                            if NORMCOUNT==numberofwindows
+                                storage=[storage; labelled_signals(j, k*100-NORMCOUNT*100+1 : k*100)];
+                                NORMCOUNT=0;
+                            end
+                        else
+                            NORMCOUNT=0;
+                        end
+                       percentage= (k+(labelcols*(j-1))) / (labelcols*labelrows);
+                       waitbar(percentage,h,'Extracting Segments');
+                    end
+                end
+                close(h);
+        amount_segments=size(storage,1);
+        message= ['Amount of normal segments extracted are: ' num2str(amount_segments) ];
+        helpdlg(message, 'Notice')
+        setappdata(0,'normal_segments_struct',storage); 
+        app.Label_5.Text='Normal segments extracted';
+        end
+
+        % Button pushed function: TrainNetworkButton_2
+        function TrainNetworkButton_2Pushed(app, event)
+        Normal_seg_TrainingInput=getappdata(0,'normal_segments_struct');
+        %%%FAILSAFE #1
+        if isempty(Normal_seg_TrainingInput)==1
+            errordlg('Normal segments not extracted','Error');
+            return
+        end
+        %%%FAILSAFE #2
+        sumasplit=app.TrainingEditField_2.Value+app.ValidationEditField_2.Value+app.TestEditField_2.Value;    
+            if sumasplit~=1
+                errordlg('Sum of values of Train,Validation and Test split must be equal to 1 ','Error');
+                return
+            end  
+        %%%FAILSAFE #3
+        sumasplit=   app.NNInputEditField.Value+ app.NNOutputEditField.Value+app.DataforModelTestingEditField.Value;    
+            if sumasplit > app.SegmentLengthmSEditField.Value
+                errordlg('Sum of values of input, output and data for test must be smaller than the segment lenght','Error');
+                return
+            end    
+        %%%FAILSAFE #4
+        value = app.NNInputEditField.Value;
+        if app.DatapointsButton.Value == true
+            wl=getappdata(0,'loaded_wl')*getappdata(0,'loaded_sf');
+        elseif app.mSButton.Value == true
+            wl=getappdata(0,'loaded_wl')*1000;
+        end
+        r= rem(value,wl);
+        if r~=0
+            errordlg('NN Input must be multiple of the window length used for labelling','Error');
+            return
+        end        
+        %%FAILSAFE #5
+        r2= rem(app.DataforModelTestingEditField.Value,app.NNOutputEditField.Value);
+        if r2~=0
+            errordlg('DataforModelTesting ust be multiple of the NNoutput','Error');             
+            return
+        end
+        %%%%%%%%%%%%%%%%%%%%%%CREATE NETWORK
+        if app.DatapointsButton.Value == true
+        inputSize=app.NNInputEditField.Value;
+        numHiddenUnits=inputSize/10;
+        numResponses=app.NNOutputEditField.Value;
+        test_seq_len= app.DataforModelTestingEditField.Value;
+        elseif app.mSButton.Value == true %%%if milliseconds
+        smp_freq=getappdata(0,'loaded_sf');
+        inputSize=app.NNInputEditField.Value*smp_freq/1000; %scale to a second divide by sampling rate
+        numHiddenUnits=inputSize/10;
+        numResponses=app.NNOutputEditField.Value*smp_freq/1000;
+        test_seq_len= app.DataforModelTestingEditField.Value*smp_freq/1000;
+        end
+        Layers = [ ...
+        sequenceInputLayer(inputSize)
+        lstmLayer(numHiddenUnits)
+        fullyConnectedLayer(numResponses)
+        regressionLayer];  
+        %%%%%%%SPLITTING data  
+        out_seq_start=inputSize+1;
+        out_seq_end=inputSize+numResponses;
+        test_seq_end= inputSize+test_seq_len;
+        [trainInd,valInd,testInd] = dividerand(Normal_seg_TrainingInput',app.TrainingEditField_2.Value,app.ValidationEditField_2.Value,app.TestEditField_2.Value);      
+        X_t= trainInd (1:inputSize,:);
+        X_v= valInd (1:inputSize,:);        
+        Y_t= trainInd (out_seq_start:out_seq_end,:);
+        Y_v= valInd (out_seq_start:out_seq_end,:);        
+        X_e= testInd (1:inputSize,:);
+        Y_e= testInd (out_seq_start:test_seq_end,:);       
+        Valtab={X_v,Y_v};
+        clear X_v Y_v trainInd valInd testInd
+        %%%%%%%LOAD OPTIONS
+        if app.PlotCheckBox_2.Value==1
+            plotoption='training-progress';
+        else
+            plotoption='none';
+        end
+        options = trainingOptions(app.SolverDropDown_2.Value , ...
+            'InitialLearnRate',app.InitialLearnRateSpinner_2.Value,...
+            'MaxEpochs',app.MaxEpochsSpinner_2.Value, ...
+            'MiniBatchSize',app.MiniBatchSizeSpinner_2.Value, ...
+            'ValidationFrequency',app.ValidationFrequencySpinner_2.Value,...
+            'ValidationData',Valtab,...
+            'InitialLearnRate',app.InitialLearnRateSpinner_2.Value, ...
+            'ExecutionEnvironment',app.ExecutionEnviromentDropDown_2.Value,...
+            'plots',plotoption, ...
+            'Verbose',app.VerboseCheckBox_2.Value,...
+            'VerboseFrequency', app.VerboseFrequencySpinner_2.Value, ...
+            'L2Regularization',app.L2RegularizationSpinner_2.Value,...
+            'GradientThresholdMethod',app.GradientThresholdMethodDropDown_2.Value,...
+            'ResetInputNormalization',app.ResetInputNormalizationCheckBox_2.Value,...
+            'GradientThreshold', app.GradientThresholdSpinner_2.Value,...
+            'ValidationPatience',app.ValidationPatienceSpinner_2.Value,...
+            'Shuffle',app.ShuffleDropDown_2.Value,...
+            'LearnRateSchedule',app.LearnRateScheduleDropDown_2.Value,...
+            'LearnRateDropFactor',app.LearnRateDropFactorSpinner_2.Value,...
+            'LearnRateDropPeriod',app.LearnRateDropPeriodSpinner_2.Value);            
+        %%%%%%%%%%TRAIN
+        [net,info] = trainNetwork(X_t,Y_t,Layers,options);
+        %%%%%%%%%%%TEST SET        
+        data=X_e;
+        test_nn_output=[];
+        iteration_total=round(test_seq_len/numResponses,0); 
+        pred_start=numResponses+1;
+        for i=1:iteration_total
+        YPred = predict(net,data);
+        newdata= [data(pred_start:end,:);YPred];
+        data=newdata;   
+        test_nn_output=[test_nn_output;YPred];
+        end        
+        n_examples=size(X_e,2);
+        rmse_v=sqrt(sum((test_nn_output(:)- Y_e(:)).^2)/n_examples);        
+        message= ['Test set root mean square error: ' num2str( rmse_v) ];
+        helpdlg(message, 'Notice')
+        app.Label_5.Text='Training Finished';
+        setappdata(0,'trainednet',net)
+        setappdata(0,'nninputzise',inputSize)
+        setappdata(0,'nnoutputzise',numResponses)
+        setappdata(0,'trainednetinfo',info)
+        setappdata(0,'testrmse',rmse_v)        
+        setappdata(0,'OGsegment',Y_e)
+        setappdata(0,'Replacedsegment',test_nn_output)
+        end
+
+        % Button pushed function: ViewTestResultsButton
+        function ViewTestResultsButtonPushed(app, event)
+            test_set_process=getappdata(0,'Replacedsegment');
+            %%%FAILSAFE #1
+            if isempty(test_set_process)==1
+                errordlg('Network not trained','Error');
+                return
+            end
+            fig_test_set_plot= uifigure('Name','Test Set Plots','Position',[550, 100, 800, 600]); %OPEN FIGURE         
+            number_of_examples=size(test_set_process,2); 
+            examplelist=strings;
+            for p=1:number_of_examples
+                p_st=num2str(p); 
+                examplelist(p)=strcat('test_example_',p_st);
+                exampleval(p)=p;
+            end
+            scale=getappdata(0,'loaded_scale');
+            sf=getappdata(0,'loaded_sf');
+            lbox = uilistbox(fig_test_set_plot,'Items',examplelist, 'ItemsData',exampleval,'Position',[50 50 200 500], 'ValueChangedFcn',@selectionChanged);
+            axisPanel=uiaxes(fig_test_set_plot,'Position',[300, 50, 400, 500]);  
+            pltlbl = uilabel(fig_test_set_plot,'Position',[350, 550, 400, 50]);
+            pltlbl.Text ='Choose Example';
+            
+            function selectionChanged(src,event) 
+            test_set_process=getappdata(0,'Replacedsegment');
+            test_set_raw=getappdata(0,'OGsegment');
+            pltlbl.Text = examplelist(lbox.Value); 
+            pltlbl.FontSize=18;            
+            proc_signal_for_plot=test_set_process(:,lbox.Value);
+            raw_signal_for_plot=test_set_raw(:,lbox.Value);
+            signallength=size(proc_signal_for_plot,1);
+            x1=linspace(1,signallength,signallength);
+            x1=x1/sf;
+            raw=plot(axisPanel,x1,raw_signal_for_plot,'Color','r');
+            hold(axisPanel,'on')
+            proc=plot(axisPanel,x1,proc_signal_for_plot,'Color','b');
+            drawnow
+            axisPanel.XLabel.String = 'Time (s)';      
+            axisPanel.YLabel.String = strcat('Amplitude',scale);    
+            hold(axisPanel,'off')
+            end
+        end
+
+        % Button pushed function: ReplaceSegmentsButton
+        function ReplaceSegmentsButtonPushed(app, event)
+        trained_net=getappdata(0,'trainednet');
+        %%%FAILSAFE #1
+        if isempty(trained_net)==1
+            errordlg('Network not trained','Error');
+            return
+        end
+        labelled_table=getappdata(0,'loaded_labelled_data');%load table
+        threshold_per_bin_per_ch=labelled_table(:,end);            
+        threshold_per_bin_per_ch=table2array(threshold_per_bin_per_ch); %get labels
+        ThresholdperChannel=getappdata(0,'loaded_thresh');                
+        row_channel_indx=size(ThresholdperChannel,2); 
+        threshold_per_bin_per_ch=reshape(threshold_per_bin_per_ch',[],row_channel_indx)';%reshape
+        labelled_signals=table2array(labelled_table(:,1:end-1)); %get signal
+        labelled_signals=reshape(labelled_signals',[], row_channel_indx)'; %reshape     
+        setappdata(0,'per_channel_signal_unprocess',labelled_signals)        
+        labelrows=size(threshold_per_bin_per_ch,1);
+        labelcols=size(threshold_per_bin_per_ch,2);
+        window_datapoints=getappdata(0,'wind_dat_point');
+        nn_input=getappdata(0,'nninputzise');    
+        nn_output=getappdata(0,'nnoutputzise');            
+        nn_input_w_numb=nn_input/window_datapoints; %number ofwindows are the input        
+        nn_onput_w_numb=window_datapoints/nn_output; %number of outputs to fill a window
+        net=getappdata(0,'trainednet');
+        %%%%%%%%%%REPLACE
+        h = waitbar(0,'Replacing Segments');
+        for j=1:labelrows
+            for k= (nn_input_w_numb+1):labelcols
+                if threshold_per_bin_per_ch(j,k)==1
+                        data=labelled_signals(j, ((k-1-nn_input_w_numb)*window_datapoints+1 : (k-1)*window_datapoints))';
+                        for l=1:nn_onput_w_numb
+                        YPred = predict(net,data);                        
+                        newdata= [data(nn_output+1:end,:);YPred];
+                        data=newdata;    
+                        end
+                    labelled_signals(j, ((k-1)*window_datapoints+1 : k*window_datapoints))=data(end-window_datapoints+1:end)';
+                end             
+                 percentage= (k+(labelcols*(j-1))) / (labelcols*labelrows);
+                 waitbar(percentage,h,'Replacing Segments');
+            end
+        end
+        close(h);
+        app.Label_5.Text='Segments Replaced';
+        setappdata(0,'per_channel_signal_process',labelled_signals)        
+        end
+
+        % Button pushed function: PlotchannelButton
+        function PlotchannelButtonPushed(app, event)
+        processed_signals=getappdata(0,'per_channel_signal_process');
+        %%%FAILSAFE #1
+        if isempty(processed_signals)==1
+            errordlg('Segments not replaced','Error');
+            return
+        end     
+        unprocessed_signals=getappdata(0,'per_channel_signal_unprocess');
+        index=app.SelectChannelDropDown_2.Value;   
+        signallength=size(unprocessed_signals,2);%%%%%ADD SCALES
+        x1=linspace(1,signallength,signallength);
+        sf=getappdata(0,'loaded_sf');
+        x1=x1/sf;        
+        scale=getappdata(0,'loaded_scale');
+        subplot(2,1,1),plot(x1,unprocessed_signals(index,:),'Color','r')
+        title('Original Signal')
+        xlabel('Time(s)') 
+        ylabel(scale) 
+        subplot(2,1,2),plot(x1,processed_signals(index,:),'Color','b')
+        title('Signal with Artifacts Removed')
+        xlabel('Time(s)') 
+        ylabel(scale) 
+        end
+
+        % Button pushed function: SaveResultsButton_2
+        function SaveResultsButton_2Pushed(app, event)
+            processed_signals=getappdata(0,'per_channel_signal_process');
+            %%%FAILSAFE #1
+            if isempty(processed_signals)==1
+                errordlg('Segments not replaced','Error');
+                return
+            end
+            removal_trainednet_and_result.filename=getappdata(0,'loaded_file_name');
+            removal_trainednet_and_result.trained_net=getappdata(0,'trainednet');
+            removal_trainednet_and_result.info=getappdata(0,'trainednetinfo');
+            removal_trainednet_and_result.test_rmse=getappdata(0,'testrmse');
+            removal_trainednet_and_result.test_set=getappdata(0,'OGsegment');
+            removal_trainednet_and_result.replaced_test_set=getappdata(0,'Replacedsegment');
+            removal_trainednet_and_result.replaces_signals=getappdata(0,'per_channel_signal_process');
+            uisave('removal_trainednet_and_result','removal_trainednet_and_result.mat');
+            app.Label_5.Text='Matrix Saved';
+        end
     end
 
     % Component initialization
@@ -1199,12 +1638,12 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             % Create UIFigure and hide until all components are created
             app.UIFigure = uifigure('Visible', 'off');
             app.UIFigure.Color = [0.9412 0.9412 0.9412];
-            app.UIFigure.Position = [100 100 561 777];
+            app.UIFigure.Position = [100 100 638 777];
             app.UIFigure.Name = 'MATLAB App';
 
             % Create TabGroup
             app.TabGroup = uitabgroup(app.UIFigure);
-            app.TabGroup.Position = [19 17 524 695];
+            app.TabGroup.Position = [19 17 602 695];
 
             % Create DataLabellingTab
             app.DataLabellingTab = uitab(app.TabGroup);
@@ -1217,20 +1656,20 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             app.LoadSignalsButton.Tooltip = {'Load neural recording'};
             app.LoadSignalsButton.Text = 'Load Signals';
             app.LoadSignalsButton.BackgroundColor = [0.9608 0.9608 0.9608];
-            app.LoadSignalsButton.Position = [56 596 111 46];
+            app.LoadSignalsButton.Position = [96 596 111 46];
 
             % Create GenerateAnalysisMatrixButton
             app.GenerateAnalysisMatrixButton = uibutton(app.DataLabellingTab, 'push');
             app.GenerateAnalysisMatrixButton.ButtonPushedFcn = createCallbackFcn(app, @GenerateAnalysisMatrixButtonPushed, true);
             app.GenerateAnalysisMatrixButton.Tooltip = {'Scale and re-size into selected window size'};
-            app.GenerateAnalysisMatrixButton.Position = [57 327 148 38];
+            app.GenerateAnalysisMatrixButton.Position = [97 327 148 38];
             app.GenerateAnalysisMatrixButton.Text = 'Generate Analysis Matrix';
 
             % Create SamplingFrequencyEditFieldLabel
             app.SamplingFrequencyEditFieldLabel = uilabel(app.DataLabellingTab);
             app.SamplingFrequencyEditFieldLabel.BackgroundColor = [0.9412 0.9412 0.9412];
             app.SamplingFrequencyEditFieldLabel.HorizontalAlignment = 'center';
-            app.SamplingFrequencyEditFieldLabel.Position = [36 548 142 22];
+            app.SamplingFrequencyEditFieldLabel.Position = [76 548 142 22];
             app.SamplingFrequencyEditFieldLabel.Text = 'Sampling Frequency (Hz)';
 
             % Create SamplingFrequencyEditField
@@ -1238,7 +1677,7 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             app.SamplingFrequencyEditField.Limits = [0.1 Inf];
             app.SamplingFrequencyEditField.BackgroundColor = [0.9412 0.9412 0.9412];
             app.SamplingFrequencyEditField.Tooltip = {'The recording frequency, in Hertz'};
-            app.SamplingFrequencyEditField.Position = [57 513 100 22];
+            app.SamplingFrequencyEditField.Position = [97 513 100 22];
             app.SamplingFrequencyEditField.Value = 1000;
 
             % Create UnitofRecordingsButtonGroup
@@ -1246,7 +1685,7 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             app.UnitofRecordingsButtonGroup.Tooltip = {'The unit of recorded electrical activity'};
             app.UnitofRecordingsButtonGroup.TitlePosition = 'centertop';
             app.UnitofRecordingsButtonGroup.Title = 'Unit of Recordings';
-            app.UnitofRecordingsButtonGroup.Position = [227 443 106 127];
+            app.UnitofRecordingsButtonGroup.Position = [267 443 106 127];
 
             % Create VButton
             app.VButton = uiradiobutton(app.UnitofRecordingsButtonGroup);
@@ -1268,14 +1707,14 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             app.LabelTableButton = uibutton(app.DataLabellingTab, 'push');
             app.LabelTableButton.ButtonPushedFcn = createCallbackFcn(app, @LabelTableButtonPushed, true);
             app.LabelTableButton.Tooltip = {'Adds the normal (0) and artifactual (1) labels to the matrix.'};
-            app.LabelTableButton.Position = [120 10 114 52];
+            app.LabelTableButton.Position = [160 10 114 52];
             app.LabelTableButton.Text = 'Label  Table';
 
             % Create WindowLength
             app.WindowLength = uilabel(app.DataLabellingTab);
             app.WindowLength.BackgroundColor = [0.9412 0.9412 0.9412];
             app.WindowLength.HorizontalAlignment = 'center';
-            app.WindowLength.Position = [54 482 106 22];
+            app.WindowLength.Position = [94 482 106 22];
             app.WindowLength.Text = 'Window Length (s)';
 
             % Create WindowLengthEditField_2
@@ -1284,14 +1723,14 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             app.WindowLengthEditField_2.ValueChangedFcn = createCallbackFcn(app, @WindowLengthEditField_2ValueChanged, true);
             app.WindowLengthEditField_2.BackgroundColor = [0.9412 0.9412 0.9412];
             app.WindowLengthEditField_2.Tooltip = {'Size of the window to analyze its power'};
-            app.WindowLengthEditField_2.Position = [57 446 100 22];
+            app.WindowLengthEditField_2.Position = [97 446 100 22];
             app.WindowLengthEditField_2.Value = 0.1;
 
             % Create ScaleButtonGroup
             app.ScaleButtonGroup = uibuttongroup(app.DataLabellingTab);
             app.ScaleButtonGroup.Tooltip = {'Scales the signals in regards to Unit of Recording.  If there is no need, click same unit here.'};
             app.ScaleButtonGroup.Title = 'Scale';
-            app.ScaleButtonGroup.Position = [388 443 100 127];
+            app.ScaleButtonGroup.Position = [428 443 100 127];
 
             % Create VButton_2
             app.VButton_2 = uiradiobutton(app.ScaleButtonGroup);
@@ -1312,26 +1751,26 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             % Create SelectedThresholdValuesLabel
             app.SelectedThresholdValuesLabel = uilabel(app.DataLabellingTab);
             app.SelectedThresholdValuesLabel.FontSize = 14;
-            app.SelectedThresholdValuesLabel.Position = [167 230 176 22];
+            app.SelectedThresholdValuesLabel.Position = [207 230 176 22];
             app.SelectedThresholdValuesLabel.Text = 'Selected Threshold Values:';
 
             % Create SaveButton
             app.SaveButton = uibutton(app.DataLabellingTab, 'push');
             app.SaveButton.ButtonPushedFcn = createCallbackFcn(app, @SaveButtonPushed, true);
             app.SaveButton.Tooltip = {'Choose a directory to save the matrix'};
-            app.SaveButton.Position = [303 10 112 52];
+            app.SaveButton.Position = [343 10 112 52];
             app.SaveButton.Text = 'Save';
 
             % Create SelectChannelDropDownLabel
             app.SelectChannelDropDownLabel = uilabel(app.DataLabellingTab);
             app.SelectChannelDropDownLabel.HorizontalAlignment = 'right';
-            app.SelectChannelDropDownLabel.Position = [9 275 87 22];
+            app.SelectChannelDropDownLabel.Position = [49 275 87 22];
             app.SelectChannelDropDownLabel.Text = 'Select Channel';
 
             % Create SelectChannelDropDown
             app.SelectChannelDropDown = uidropdown(app.DataLabellingTab);
             app.SelectChannelDropDown.Items = {'Channel 1'};
-            app.SelectChannelDropDown.Position = [111 275 100 22];
+            app.SelectChannelDropDown.Position = [151 275 100 22];
             app.SelectChannelDropDown.Value = 'Channel 1';
 
             % Create UITable
@@ -1341,13 +1780,13 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             app.UITable.ColumnEditable = true;
             app.UITable.CellSelectionCallback = createCallbackFcn(app, @UITableCellSelection, true);
             app.UITable.Tag = 'thresholddisplay';
-            app.UITable.Position = [7 69 510 155];
+            app.UITable.Position = [47 69 510 155];
 
             % Create ThresTableButton
             app.ThresTableButton = uibutton(app.DataLabellingTab, 'push');
             app.ThresTableButton.ButtonPushedFcn = createCallbackFcn(app, @ThresTableButtonPushed, true);
             app.ThresTableButton.Tooltip = {'Allows for threshold selection and plot'};
-            app.ThresTableButton.Position = [262 267 114 39];
+            app.ThresTableButton.Position = [302 267 114 39];
             app.ThresTableButton.Text = 'Thres. Table';
 
             % Create ProgressPanel
@@ -1356,7 +1795,7 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             app.ProgressPanel.TitlePosition = 'centertop';
             app.ProgressPanel.Title = 'Progress';
             app.ProgressPanel.BackgroundColor = [0.9412 0.9412 0.9412];
-            app.ProgressPanel.Position = [227 588 261 60];
+            app.ProgressPanel.Position = [267 588 261 60];
 
             % Create Label_2
             app.Label_2 = uilabel(app.ProgressPanel);
@@ -1371,7 +1810,7 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             app.SaveUnlabelledDataButton = uibutton(app.DataLabellingTab, 'push');
             app.SaveUnlabelledDataButton.ButtonPushedFcn = createCallbackFcn(app, @SaveUnlabelledDataButtonPushed, true);
             app.SaveUnlabelledDataButton.Tooltip = {'Choose a directory to save the unlabelled matrix'};
-            app.SaveUnlabelledDataButton.Position = [307 327 151 38];
+            app.SaveUnlabelledDataButton.Position = [347 327 151 38];
             app.SaveUnlabelledDataButton.Text = 'Save Unlabelled Data';
 
             % Create FormatforSigMateButton
@@ -1380,7 +1819,7 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             app.FormatforSigMateButton.FontWeight = 'bold';
             app.FormatforSigMateButton.FontColor = [0.7412 0.2784 0.0824];
             app.FormatforSigMateButton.Tooltip = {'Format to .txt files for SigMate'};
-            app.FormatforSigMateButton.Position = [57 384 152 38];
+            app.FormatforSigMateButton.Position = [97 384 152 38];
             app.FormatforSigMateButton.Text = 'Format for SigMate';
 
             % Create OpenSigMateButton
@@ -1390,14 +1829,14 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             app.OpenSigMateButton.FontWeight = 'bold';
             app.OpenSigMateButton.FontColor = [0.7412 0.2784 0.0824];
             app.OpenSigMateButton.Tooltip = {'Run Sigmate Toolbox'};
-            app.OpenSigMateButton.Position = [307 384 152 38];
+            app.OpenSigMateButton.Position = [347 384 152 38];
             app.OpenSigMateButton.Text = 'Open SigMate';
 
             % Create HistogramTheshButton
             app.HistogramTheshButton = uibutton(app.DataLabellingTab, 'push');
             app.HistogramTheshButton.ButtonPushedFcn = createCallbackFcn(app, @HistogramTheshButtonPushed, true);
             app.HistogramTheshButton.Tooltip = {'Allows for threshold selection and plot'};
-            app.HistogramTheshButton.Position = [400 267 114 39];
+            app.HistogramTheshButton.Position = [440 267 114 39];
             app.HistogramTheshButton.Text = 'Histogram Thesh.';
 
             % Create NeuralNetworkTrainingTab
@@ -1408,13 +1847,13 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             app.SaveResultsButton = uibutton(app.NeuralNetworkTrainingTab, 'push');
             app.SaveResultsButton.ButtonPushedFcn = createCallbackFcn(app, @SaveResultsButtonPushed, true);
             app.SaveResultsButton.Tooltip = {'Saves trained network, training info and test classification.'};
-            app.SaveResultsButton.Position = [182 10 123 60];
+            app.SaveResultsButton.Position = [239 10 123 60];
             app.SaveResultsButton.Text = 'Save Results';
 
             % Create TrainingoptionsPanel
             app.TrainingoptionsPanel = uipanel(app.NeuralNetworkTrainingTab);
             app.TrainingoptionsPanel.Title = 'Training options';
-            app.TrainingoptionsPanel.Position = [236 84 278 495];
+            app.TrainingoptionsPanel.Position = [302 84 278 495];
 
             % Create TabGroup2
             app.TabGroup2 = uitabgroup(app.TrainingoptionsPanel);
@@ -1670,7 +2109,7 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             % Create NetworkTrainingPanel
             app.NetworkTrainingPanel = uipanel(app.NeuralNetworkTrainingTab);
             app.NetworkTrainingPanel.Title = 'Network Training';
-            app.NetworkTrainingPanel.Position = [4 84 227 343];
+            app.NetworkTrainingPanel.Position = [26 84 227 343];
 
             % Create TrainNetworkButton
             app.TrainNetworkButton = uibutton(app.NetworkTrainingPanel, 'push');
@@ -1727,7 +2166,7 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             % Create TrainingDataPanel_2
             app.TrainingDataPanel_2 = uipanel(app.NeuralNetworkTrainingTab);
             app.TrainingDataPanel_2.Title = 'Training Data';
-            app.TrainingDataPanel_2.Position = [7 443 224 217];
+            app.TrainingDataPanel_2.Position = [28 443 224 217];
 
             % Create LoadTrainingDataButton
             app.LoadTrainingDataButton = uibutton(app.TrainingDataPanel_2, 'push');
@@ -1795,7 +2234,7 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             app.ProgressPanel_2.TitlePosition = 'centertop';
             app.ProgressPanel_2.Title = 'Progress';
             app.ProgressPanel_2.BackgroundColor = [0.9412 0.9412 0.9412];
-            app.ProgressPanel_2.Position = [236 594 278 66];
+            app.ProgressPanel_2.Position = [302 588 278 66];
 
             % Create Label_3
             app.Label_3 = uilabel(app.ProgressPanel_2);
@@ -1904,25 +2343,492 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             app.SelectWindowListBoxLabel.Position = [67 436 85 22];
             app.SelectWindowListBoxLabel.Text = 'Select Window';
 
+            % Create ArtifactRemovalTab
+            app.ArtifactRemovalTab = uitab(app.TabGroup);
+            app.ArtifactRemovalTab.Title = 'Artifact Removal';
+
+            % Create SaveResultsButton_2
+            app.SaveResultsButton_2 = uibutton(app.ArtifactRemovalTab, 'push');
+            app.SaveResultsButton_2.ButtonPushedFcn = createCallbackFcn(app, @SaveResultsButton_2Pushed, true);
+            app.SaveResultsButton_2.Tooltip = {'Saves trained network, training info and artefact-removed dataset.'};
+            app.SaveResultsButton_2.Position = [245 6 123 60];
+            app.SaveResultsButton_2.Text = 'Save Results';
+
+            % Create TrainingoptionsPanel_2
+            app.TrainingoptionsPanel_2 = uipanel(app.ArtifactRemovalTab);
+            app.TrainingoptionsPanel_2.Title = 'Training options';
+            app.TrainingoptionsPanel_2.Position = [320 69 278 495];
+
+            % Create TabGroup2_2
+            app.TabGroup2_2 = uitabgroup(app.TrainingoptionsPanel_2);
+            app.TabGroup2_2.Position = [0 1 277 477];
+
+            % Create BasicTab_2
+            app.BasicTab_2 = uitab(app.TabGroup2_2);
+            app.BasicTab_2.Title = 'Basic';
+
+            % Create PlotCheckBox_2
+            app.PlotCheckBox_2 = uicheckbox(app.BasicTab_2);
+            app.PlotCheckBox_2.Tooltip = {'Show training process'};
+            app.PlotCheckBox_2.Text = 'Plot';
+            app.PlotCheckBox_2.Position = [26 131 43 22];
+            app.PlotCheckBox_2.Value = true;
+
+            % Create ExecutionEnviromentDropDown_2Label
+            app.ExecutionEnviromentDropDown_2Label = uilabel(app.BasicTab_2);
+            app.ExecutionEnviromentDropDown_2Label.HorizontalAlignment = 'right';
+            app.ExecutionEnviromentDropDown_2Label.Position = [26 179 122 22];
+            app.ExecutionEnviromentDropDown_2Label.Text = 'Execution Enviroment';
+
+            % Create ExecutionEnviromentDropDown_2
+            app.ExecutionEnviromentDropDown_2 = uidropdown(app.BasicTab_2);
+            app.ExecutionEnviromentDropDown_2.Items = {'Auto', 'CPU', 'GPU', 'Multi-GPU', 'Parallel'};
+            app.ExecutionEnviromentDropDown_2.ItemsData = {'auto', 'cpu', 'gpu', 'multi-gpu', 'parallel'};
+            app.ExecutionEnviromentDropDown_2.Tooltip = {'Hardware resource for training network'};
+            app.ExecutionEnviromentDropDown_2.Position = [156 179 100 22];
+            app.ExecutionEnviromentDropDown_2.Value = 'auto';
+
+            % Create SolverDropDown_2Label
+            app.SolverDropDown_2Label = uilabel(app.BasicTab_2);
+            app.SolverDropDown_2Label.HorizontalAlignment = 'right';
+            app.SolverDropDown_2Label.Position = [26 421 40 22];
+            app.SolverDropDown_2Label.Text = 'Solver';
+
+            % Create SolverDropDown_2
+            app.SolverDropDown_2 = uidropdown(app.BasicTab_2);
+            app.SolverDropDown_2.Items = {'Adam', 'SGD', 'RMSProp', ''};
+            app.SolverDropDown_2.ItemsData = {'adam', 'sgdm', 'rmsprop'};
+            app.SolverDropDown_2.Tooltip = {'Solver for training network'};
+            app.SolverDropDown_2.Position = [81 421 100 22];
+            app.SolverDropDown_2.Value = 'adam';
+
+            % Create InitialLearnRateSpinner_2Label
+            app.InitialLearnRateSpinner_2Label = uilabel(app.BasicTab_2);
+            app.InitialLearnRateSpinner_2Label.HorizontalAlignment = 'right';
+            app.InitialLearnRateSpinner_2Label.Position = [26 372 90 22];
+            app.InitialLearnRateSpinner_2Label.Text = 'InitialLearnRate';
+
+            % Create InitialLearnRateSpinner_2
+            app.InitialLearnRateSpinner_2 = uispinner(app.BasicTab_2);
+            app.InitialLearnRateSpinner_2.Step = 0.0001;
+            app.InitialLearnRateSpinner_2.Limits = [0 1];
+            app.InitialLearnRateSpinner_2.Tooltip = {'Initial learning rate'};
+            app.InitialLearnRateSpinner_2.Position = [143 372 100 22];
+            app.InitialLearnRateSpinner_2.Value = 0.0001;
+
+            % Create ValidationFrequencySpinner_2Label
+            app.ValidationFrequencySpinner_2Label = uilabel(app.BasicTab_2);
+            app.ValidationFrequencySpinner_2Label.HorizontalAlignment = 'right';
+            app.ValidationFrequencySpinner_2Label.Position = [26 323 117 22];
+            app.ValidationFrequencySpinner_2Label.Text = 'Validation Frequency';
+
+            % Create ValidationFrequencySpinner_2
+            app.ValidationFrequencySpinner_2 = uispinner(app.BasicTab_2);
+            app.ValidationFrequencySpinner_2.Limits = [1 Inf];
+            app.ValidationFrequencySpinner_2.Tooltip = {'Frequency of network validation'};
+            app.ValidationFrequencySpinner_2.Position = [162 323 100 22];
+            app.ValidationFrequencySpinner_2.Value = 50;
+
+            % Create MaxEpochsSpinner_2Label
+            app.MaxEpochsSpinner_2Label = uilabel(app.BasicTab_2);
+            app.MaxEpochsSpinner_2Label.HorizontalAlignment = 'right';
+            app.MaxEpochsSpinner_2Label.Position = [26 275 68 22];
+            app.MaxEpochsSpinner_2Label.Text = 'MaxEpochs';
+
+            % Create MaxEpochsSpinner_2
+            app.MaxEpochsSpinner_2 = uispinner(app.BasicTab_2);
+            app.MaxEpochsSpinner_2.Limits = [1 Inf];
+            app.MaxEpochsSpinner_2.Tooltip = {'Maximum Number of Epochs'};
+            app.MaxEpochsSpinner_2.Position = [133 275 100 22];
+            app.MaxEpochsSpinner_2.Value = 30;
+
+            % Create MiniBatchSizeSpinner_2Label
+            app.MiniBatchSizeSpinner_2Label = uilabel(app.BasicTab_2);
+            app.MiniBatchSizeSpinner_2Label.HorizontalAlignment = 'right';
+            app.MiniBatchSizeSpinner_2Label.Position = [26 227 82 22];
+            app.MiniBatchSizeSpinner_2Label.Text = 'MiniBatchSize';
+
+            % Create MiniBatchSizeSpinner_2
+            app.MiniBatchSizeSpinner_2 = uispinner(app.BasicTab_2);
+            app.MiniBatchSizeSpinner_2.Limits = [1 Inf];
+            app.MiniBatchSizeSpinner_2.Tooltip = {'Size of Mini-Batch'};
+            app.MiniBatchSizeSpinner_2.Position = [129 227 100 22];
+            app.MiniBatchSizeSpinner_2.Value = 128;
+
+            % Create VerboseCheckBox_2
+            app.VerboseCheckBox_2 = uicheckbox(app.BasicTab_2);
+            app.VerboseCheckBox_2.Tooltip = {'Verbose the training process'};
+            app.VerboseCheckBox_2.Text = 'Verbose';
+            app.VerboseCheckBox_2.Position = [26 83 66 22];
+            app.VerboseCheckBox_2.Value = true;
+
+            % Create VerboseFrequencySpinner_2Label
+            app.VerboseFrequencySpinner_2Label = uilabel(app.BasicTab_2);
+            app.VerboseFrequencySpinner_2Label.HorizontalAlignment = 'right';
+            app.VerboseFrequencySpinner_2Label.Position = [21 44 110 22];
+            app.VerboseFrequencySpinner_2Label.Text = 'Verbose Frequency';
+
+            % Create VerboseFrequencySpinner_2
+            app.VerboseFrequencySpinner_2 = uispinner(app.BasicTab_2);
+            app.VerboseFrequencySpinner_2.Limits = [1 Inf];
+            app.VerboseFrequencySpinner_2.Tooltip = {'Frequency of verbose'};
+            app.VerboseFrequencySpinner_2.Position = [139 44 100 22];
+            app.VerboseFrequencySpinner_2.Value = 50;
+
+            % Create AdvancedoptionalTab_2
+            app.AdvancedoptionalTab_2 = uitab(app.TabGroup2_2);
+            app.AdvancedoptionalTab_2.Title = 'Advanced (optional)';
+
+            % Create L2RegularizationSpinner_2Label
+            app.L2RegularizationSpinner_2Label = uilabel(app.AdvancedoptionalTab_2);
+            app.L2RegularizationSpinner_2Label.HorizontalAlignment = 'right';
+            app.L2RegularizationSpinner_2Label.Position = [18 421 96 22];
+            app.L2RegularizationSpinner_2Label.Text = 'L2Regularization';
+
+            % Create L2RegularizationSpinner_2
+            app.L2RegularizationSpinner_2 = uispinner(app.AdvancedoptionalTab_2);
+            app.L2RegularizationSpinner_2.Step = 0.0001;
+            app.L2RegularizationSpinner_2.Limits = [0 Inf];
+            app.L2RegularizationSpinner_2.Tooltip = {'Factor for L 2 regularizer'};
+            app.L2RegularizationSpinner_2.Position = [134 421 126 22];
+            app.L2RegularizationSpinner_2.Value = 0.0001;
+
+            % Create GradientThresholdMethodDropDown_2Label
+            app.GradientThresholdMethodDropDown_2Label = uilabel(app.AdvancedoptionalTab_2);
+            app.GradientThresholdMethodDropDown_2Label.HorizontalAlignment = 'right';
+            app.GradientThresholdMethodDropDown_2Label.Position = [18 379 145 22];
+            app.GradientThresholdMethodDropDown_2Label.Text = 'GradientThresholdMethod';
+
+            % Create GradientThresholdMethodDropDown_2
+            app.GradientThresholdMethodDropDown_2 = uidropdown(app.AdvancedoptionalTab_2);
+            app.GradientThresholdMethodDropDown_2.Items = {'l2norm', 'global-l2norm', 'absolutevalue'};
+            app.GradientThresholdMethodDropDown_2.ItemsData = {'l2norm', 'global-l2norm', 'absolutevalue'};
+            app.GradientThresholdMethodDropDown_2.Tooltip = {'Gradient Threshold Method'};
+            app.GradientThresholdMethodDropDown_2.Position = [173 379 100 22];
+            app.GradientThresholdMethodDropDown_2.Value = 'l2norm';
+
+            % Create ResetInputNormalizationCheckBox_2
+            app.ResetInputNormalizationCheckBox_2 = uicheckbox(app.AdvancedoptionalTab_2);
+            app.ResetInputNormalizationCheckBox_2.Tooltip = {'Option to reset input layer normalization'};
+            app.ResetInputNormalizationCheckBox_2.Text = 'ResetInputNormalization';
+            app.ResetInputNormalizationCheckBox_2.Position = [18 76 153 22];
+            app.ResetInputNormalizationCheckBox_2.Value = true;
+
+            % Create GradientThresholdSpinner_2Label
+            app.GradientThresholdSpinner_2Label = uilabel(app.AdvancedoptionalTab_2);
+            app.GradientThresholdSpinner_2Label.HorizontalAlignment = 'right';
+            app.GradientThresholdSpinner_2Label.Position = [18 337 105 22];
+            app.GradientThresholdSpinner_2Label.Text = 'GradientThreshold';
+
+            % Create GradientThresholdSpinner_2
+            app.GradientThresholdSpinner_2 = uispinner(app.AdvancedoptionalTab_2);
+            app.GradientThresholdSpinner_2.Step = 0.1;
+            app.GradientThresholdSpinner_2.Limits = [0 Inf];
+            app.GradientThresholdSpinner_2.Tooltip = {'Gradient Threshold'};
+            app.GradientThresholdSpinner_2.Position = [133 337 114 22];
+            app.GradientThresholdSpinner_2.Value = Inf;
+
+            % Create ValidationPatienceSpinner_2Label
+            app.ValidationPatienceSpinner_2Label = uilabel(app.AdvancedoptionalTab_2);
+            app.ValidationPatienceSpinner_2Label.HorizontalAlignment = 'right';
+            app.ValidationPatienceSpinner_2Label.Position = [21 294 104 22];
+            app.ValidationPatienceSpinner_2Label.Text = 'ValidationPatience';
+
+            % Create ValidationPatienceSpinner_2
+            app.ValidationPatienceSpinner_2 = uispinner(app.AdvancedoptionalTab_2);
+            app.ValidationPatienceSpinner_2.Limits = [1 Inf];
+            app.ValidationPatienceSpinner_2.Tooltip = {'Patience of validation stopping'};
+            app.ValidationPatienceSpinner_2.Position = [134 295 110 22];
+            app.ValidationPatienceSpinner_2.Value = Inf;
+
+            % Create ShuffleDropDown_2Label
+            app.ShuffleDropDown_2Label = uilabel(app.AdvancedoptionalTab_2);
+            app.ShuffleDropDown_2Label.HorizontalAlignment = 'right';
+            app.ShuffleDropDown_2Label.Position = [18 251 43 22];
+            app.ShuffleDropDown_2Label.Text = 'Shuffle';
+
+            % Create ShuffleDropDown_2
+            app.ShuffleDropDown_2 = uidropdown(app.AdvancedoptionalTab_2);
+            app.ShuffleDropDown_2.Items = {'once', 'never', 'every-epoch'};
+            app.ShuffleDropDown_2.ItemsData = {'once', 'never', 'every-epoch'};
+            app.ShuffleDropDown_2.Tooltip = {'Option for data shuffling'};
+            app.ShuffleDropDown_2.Position = [84 252 100 22];
+            app.ShuffleDropDown_2.Value = 'once';
+
+            % Create LearnRateScheduleDropDown_2Label
+            app.LearnRateScheduleDropDown_2Label = uilabel(app.AdvancedoptionalTab_2);
+            app.LearnRateScheduleDropDown_2Label.HorizontalAlignment = 'right';
+            app.LearnRateScheduleDropDown_2Label.Position = [18 209 112 22];
+            app.LearnRateScheduleDropDown_2Label.Text = 'LearnRateSchedule';
+
+            % Create LearnRateScheduleDropDown_2
+            app.LearnRateScheduleDropDown_2 = uidropdown(app.AdvancedoptionalTab_2);
+            app.LearnRateScheduleDropDown_2.Items = {'none', 'piecewise'};
+            app.LearnRateScheduleDropDown_2.ItemsData = {'none', 'piecewise'};
+            app.LearnRateScheduleDropDown_2.Tooltip = {'Option for dropping learning rate during training'};
+            app.LearnRateScheduleDropDown_2.Position = [148 212 100 22];
+            app.LearnRateScheduleDropDown_2.Value = 'none';
+
+            % Create LearnRateDropFactorSpinner_2Label
+            app.LearnRateDropFactorSpinner_2Label = uilabel(app.AdvancedoptionalTab_2);
+            app.LearnRateDropFactorSpinner_2Label.HorizontalAlignment = 'right';
+            app.LearnRateDropFactorSpinner_2Label.Position = [18 163 122 22];
+            app.LearnRateDropFactorSpinner_2Label.Text = 'LearnRateDropFactor';
+
+            % Create LearnRateDropFactorSpinner_2
+            app.LearnRateDropFactorSpinner_2 = uispinner(app.AdvancedoptionalTab_2);
+            app.LearnRateDropFactorSpinner_2.Step = 0.01;
+            app.LearnRateDropFactorSpinner_2.Limits = [0 1];
+            app.LearnRateDropFactorSpinner_2.Tooltip = {'Factor for dropping the learning rate'};
+            app.LearnRateDropFactorSpinner_2.Position = [151 167 111 22];
+            app.LearnRateDropFactorSpinner_2.Value = 0.1;
+
+            % Create LearnRateDropPeriodSpinner_2Label
+            app.LearnRateDropPeriodSpinner_2Label = uilabel(app.AdvancedoptionalTab_2);
+            app.LearnRateDropPeriodSpinner_2Label.HorizontalAlignment = 'right';
+            app.LearnRateDropPeriodSpinner_2Label.Position = [18 121 122 22];
+            app.LearnRateDropPeriodSpinner_2Label.Text = 'LearnRateDropPeriod';
+
+            % Create LearnRateDropPeriodSpinner_2
+            app.LearnRateDropPeriodSpinner_2 = uispinner(app.AdvancedoptionalTab_2);
+            app.LearnRateDropPeriodSpinner_2.Limits = [1 Inf];
+            app.LearnRateDropPeriodSpinner_2.Tooltip = {'Number of epochs for dropping the learning rate'};
+            app.LearnRateDropPeriodSpinner_2.Position = [151 118 109 22];
+            app.LearnRateDropPeriodSpinner_2.Value = 10;
+
+            % Create MomentumSpinner_2Label
+            app.MomentumSpinner_2Label = uilabel(app.AdvancedoptionalTab_2);
+            app.MomentumSpinner_2Label.HorizontalAlignment = 'right';
+            app.MomentumSpinner_2Label.Position = [18 35 66 22];
+            app.MomentumSpinner_2Label.Text = 'Momentum';
+
+            % Create MomentumSpinner_2
+            app.MomentumSpinner_2 = uispinner(app.AdvancedoptionalTab_2);
+            app.MomentumSpinner_2.Step = 0.01;
+            app.MomentumSpinner_2.Limits = [0 1];
+            app.MomentumSpinner_2.Tooltip = {'Contribution of previous gradient step'};
+            app.MomentumSpinner_2.Position = [99 35 161 22];
+            app.MomentumSpinner_2.Value = 0.9;
+
+            % Create NetworkTrainingPanel_2
+            app.NetworkTrainingPanel_2 = uipanel(app.ArtifactRemovalTab);
+            app.NetworkTrainingPanel_2.Title = 'Network Training';
+            app.NetworkTrainingPanel_2.Position = [12 69 302 426];
+
+            % Create TrainNetworkButton_2
+            app.TrainNetworkButton_2 = uibutton(app.NetworkTrainingPanel_2, 'push');
+            app.TrainNetworkButton_2.ButtonPushedFcn = createCallbackFcn(app, @TrainNetworkButton_2Pushed, true);
+            app.TrainNetworkButton_2.FontSize = 18;
+            app.TrainNetworkButton_2.FontWeight = 'bold';
+            app.TrainNetworkButton_2.FontColor = [0.0745 0.6235 1];
+            app.TrainNetworkButton_2.Tooltip = {'Train network using training set, using the defined training options parameters.'};
+            app.TrainNetworkButton_2.Position = [8 130 150 50];
+            app.TrainNetworkButton_2.Text = 'Train Network';
+
+            % Create ViewTestResultsButton
+            app.ViewTestResultsButton = uibutton(app.NetworkTrainingPanel_2, 'push');
+            app.ViewTestResultsButton.ButtonPushedFcn = createCallbackFcn(app, @ViewTestResultsButtonPushed, true);
+            app.ViewTestResultsButton.Tooltip = {'plot different test set windows with the network''s prediction'};
+            app.ViewTestResultsButton.Position = [166 130 114 50];
+            app.ViewTestResultsButton.Text = 'View Test Results';
+
+            % Create TrainingEditField_2Label
+            app.TrainingEditField_2Label = uilabel(app.NetworkTrainingPanel_2);
+            app.TrainingEditField_2Label.HorizontalAlignment = 'center';
+            app.TrainingEditField_2Label.Position = [40 227 48 22];
+            app.TrainingEditField_2Label.Text = 'Training';
+
+            % Create TrainingEditField_2
+            app.TrainingEditField_2 = uieditfield(app.NetworkTrainingPanel_2, 'numeric');
+            app.TrainingEditField_2.Limits = [0.5 1];
+            app.TrainingEditField_2.Tooltip = {'Part of the data for training, at leat 50%.'};
+            app.TrainingEditField_2.Position = [40 195 48 22];
+            app.TrainingEditField_2.Value = 0.8;
+
+            % Create ValidationEditField_2Label
+            app.ValidationEditField_2Label = uilabel(app.NetworkTrainingPanel_2);
+            app.ValidationEditField_2Label.HorizontalAlignment = 'center';
+            app.ValidationEditField_2Label.Position = [123 227 57 22];
+            app.ValidationEditField_2Label.Text = 'Validation';
+
+            % Create ValidationEditField_2
+            app.ValidationEditField_2 = uieditfield(app.NetworkTrainingPanel_2, 'numeric');
+            app.ValidationEditField_2.Limits = [0.01 0.5];
+            app.ValidationEditField_2.Tooltip = {'Part of the data for validation, at least 1%.'};
+            app.ValidationEditField_2.Position = [126 195 51 22];
+            app.ValidationEditField_2.Value = 0.1;
+
+            % Create TestEditField_2Label
+            app.TestEditField_2Label = uilabel(app.NetworkTrainingPanel_2);
+            app.TestEditField_2Label.HorizontalAlignment = 'center';
+            app.TestEditField_2Label.Position = [217 227 28 22];
+            app.TestEditField_2Label.Text = 'Test';
+
+            % Create TestEditField_2
+            app.TestEditField_2 = uieditfield(app.NetworkTrainingPanel_2, 'numeric');
+            app.TestEditField_2.Limits = [0.01 0.5];
+            app.TestEditField_2.Tooltip = {'Part of the data for testing, at least 1%.'};
+            app.TestEditField_2.Position = [210 196 52 22];
+            app.TestEditField_2.Value = 0.1;
+
+            % Create ReplaceSegmentsButton
+            app.ReplaceSegmentsButton = uibutton(app.NetworkTrainingPanel_2, 'push');
+            app.ReplaceSegmentsButton.ButtonPushedFcn = createCallbackFcn(app, @ReplaceSegmentsButtonPushed, true);
+            app.ReplaceSegmentsButton.Tooltip = {'Replace artifactual segments of the loaded data with NN predictions'};
+            app.ReplaceSegmentsButton.Position = [89 71 117 50];
+            app.ReplaceSegmentsButton.Text = 'Replace Segments';
+
+            % Create PlotchannelButton
+            app.PlotchannelButton = uibutton(app.NetworkTrainingPanel_2, 'push');
+            app.PlotchannelButton.ButtonPushedFcn = createCallbackFcn(app, @PlotchannelButtonPushed, true);
+            app.PlotchannelButton.Tooltip = {'Plot selected channel in the original and replaced versions for comparison'};
+            app.PlotchannelButton.Position = [154 6 115 55];
+            app.PlotchannelButton.Text = 'Plot channel';
+
+            % Create SequenceLengthPanel
+            app.SequenceLengthPanel = uipanel(app.NetworkTrainingPanel_2);
+            app.SequenceLengthPanel.Title = 'Sequence Length';
+            app.SequenceLengthPanel.Position = [3 252 299 151];
+
+            % Create NNInputEditFieldLabel
+            app.NNInputEditFieldLabel = uilabel(app.SequenceLengthPanel);
+            app.NNInputEditFieldLabel.HorizontalAlignment = 'center';
+            app.NNInputEditFieldLabel.Position = [20 100 53 22];
+            app.NNInputEditFieldLabel.Text = 'NN Input';
+
+            % Create NNInputEditField
+            app.NNInputEditField = uieditfield(app.SequenceLengthPanel, 'numeric');
+            app.NNInputEditField.Limits = [1e-06 Inf];
+            app.NNInputEditField.Tooltip = {'Input size of the neural network'};
+            app.NNInputEditField.Position = [22 68 48 22];
+            app.NNInputEditField.Value = 200;
+
+            % Create NNOutputEditFieldLabel
+            app.NNOutputEditFieldLabel = uilabel(app.SequenceLengthPanel);
+            app.NNOutputEditFieldLabel.HorizontalAlignment = 'center';
+            app.NNOutputEditFieldLabel.Position = [91 100 62 22];
+            app.NNOutputEditFieldLabel.Text = 'NN Output';
+
+            % Create NNOutputEditField
+            app.NNOutputEditField = uieditfield(app.SequenceLengthPanel, 'numeric');
+            app.NNOutputEditField.Limits = [1e-06 Inf];
+            app.NNOutputEditField.Tooltip = {'Number of points predicted by the network'};
+            app.NNOutputEditField.Position = [98 68 48 22];
+            app.NNOutputEditField.Value = 25;
+
+            % Create UnitButtonGroup
+            app.UnitButtonGroup = uibuttongroup(app.SequenceLengthPanel);
+            app.UnitButtonGroup.Tooltip = {'Define which unit are the sequence lengths defined in.'};
+            app.UnitButtonGroup.TitlePosition = 'centertop';
+            app.UnitButtonGroup.Title = 'Unit';
+            app.UnitButtonGroup.Position = [15 6 271 52];
+
+            % Create mSButton
+            app.mSButton = uiradiobutton(app.UnitButtonGroup);
+            app.mSButton.Tooltip = {''};
+            app.mSButton.Text = 'mS';
+            app.mSButton.Position = [70 6 58 22];
+            app.mSButton.Value = true;
+
+            % Create DatapointsButton
+            app.DatapointsButton = uiradiobutton(app.UnitButtonGroup);
+            app.DatapointsButton.Text = 'Datapoints';
+            app.DatapointsButton.Position = [152 6 79 22];
+
+            % Create DataforModelTestingLabel
+            app.DataforModelTestingLabel = uilabel(app.SequenceLengthPanel);
+            app.DataforModelTestingLabel.HorizontalAlignment = 'center';
+            app.DataforModelTestingLabel.Position = [167 100 125 22];
+            app.DataforModelTestingLabel.Text = 'Data for Model Testing';
+
+            % Create DataforModelTestingEditField
+            app.DataforModelTestingEditField = uieditfield(app.SequenceLengthPanel, 'numeric');
+            app.DataforModelTestingEditField.Limits = [1e-06 Inf];
+            app.DataforModelTestingEditField.Tooltip = {'Number of points to calculate the RMSE of the model''s prediction'};
+            app.DataforModelTestingEditField.Position = [201 68 48 22];
+            app.DataforModelTestingEditField.Value = 100;
+
+            % Create TrainingDataPanel_3
+            app.TrainingDataPanel_3 = uipanel(app.ArtifactRemovalTab);
+            app.TrainingDataPanel_3.Title = 'Training Data';
+            app.TrainingDataPanel_3.Position = [14 503 299 163];
+
+            % Create LoadTrainingDataButton_2
+            app.LoadTrainingDataButton_2 = uibutton(app.TrainingDataPanel_3, 'push');
+            app.LoadTrainingDataButton_2.ButtonPushedFcn = createCallbackFcn(app, @LoadTrainingDataButton_2Pushed, true);
+            app.LoadTrainingDataButton_2.Tooltip = {'Load data structured for NN training. '};
+            app.LoadTrainingDataButton_2.Position = [96 91 120 45];
+            app.LoadTrainingDataButton_2.Text = 'Load Training  Data';
+
+            % Create ExtractArtifactfreeSegmentsButton
+            app.ExtractArtifactfreeSegmentsButton = uibutton(app.TrainingDataPanel_3, 'push');
+            app.ExtractArtifactfreeSegmentsButton.ButtonPushedFcn = createCallbackFcn(app, @ExtractArtifactfreeSegmentsButtonPushed, true);
+            app.ExtractArtifactfreeSegmentsButton.Tooltip = {'Extract artifact free segments of the length defined.'};
+            app.ExtractArtifactfreeSegmentsButton.Position = [149 15 137 52];
+            app.ExtractArtifactfreeSegmentsButton.Text = {'Extract Artifact-free '; 'Segments'};
+
+            % Create SegmentLengthmSEditFieldLabel
+            app.SegmentLengthmSEditFieldLabel = uilabel(app.TrainingDataPanel_3);
+            app.SegmentLengthmSEditFieldLabel.HorizontalAlignment = 'center';
+            app.SegmentLengthmSEditFieldLabel.Position = [6 50 123 22];
+            app.SegmentLengthmSEditFieldLabel.Text = 'Segment Length (mS)';
+
+            % Create SegmentLengthmSEditField
+            app.SegmentLengthmSEditField = uieditfield(app.TrainingDataPanel_3, 'numeric');
+            app.SegmentLengthmSEditField.Limits = [0.001 Inf];
+            app.SegmentLengthmSEditField.Tooltip = {'Number of points without noise to be extracted'};
+            app.SegmentLengthmSEditField.Position = [43 18 48 22];
+            app.SegmentLengthmSEditField.Value = 1000;
+
+            % Create ProgressPanel_4
+            app.ProgressPanel_4 = uipanel(app.ArtifactRemovalTab);
+            app.ProgressPanel_4.Tooltip = {'Guides user'};
+            app.ProgressPanel_4.TitlePosition = 'centertop';
+            app.ProgressPanel_4.Title = 'Progress';
+            app.ProgressPanel_4.BackgroundColor = [0.9412 0.9412 0.9412];
+            app.ProgressPanel_4.Position = [320 574 278 92];
+
+            % Create Label_5
+            app.Label_5 = uilabel(app.ProgressPanel_4);
+            app.Label_5.HorizontalAlignment = 'center';
+            app.Label_5.FontSize = 16;
+            app.Label_5.FontWeight = 'bold';
+            app.Label_5.FontColor = [1 0.0745 0.651];
+            app.Label_5.Visible = 'off';
+            app.Label_5.Position = [11 11 258 51];
+
+            % Create SelectChannelDropDown_2Label
+            app.SelectChannelDropDown_2Label = uilabel(app.ArtifactRemovalTab);
+            app.SelectChannelDropDown_2Label.HorizontalAlignment = 'right';
+            app.SelectChannelDropDown_2Label.Position = [37 117 87 22];
+            app.SelectChannelDropDown_2Label.Text = 'Select Channel';
+
+            % Create SelectChannelDropDown_2
+            app.SelectChannelDropDown_2 = uidropdown(app.ArtifactRemovalTab);
+            app.SelectChannelDropDown_2.Items = {'Channel 1'};
+            app.SelectChannelDropDown_2.Tooltip = {'Choose channel to plot.'};
+            app.SelectChannelDropDown_2.Position = [31 84 100 22];
+            app.SelectChannelDropDown_2.Value = 'Channel 1';
+
             % Create Label
             app.Label = uilabel(app.UIFigure);
             app.Label.HorizontalAlignment = 'center';
             app.Label.FontSize = 18;
             app.Label.FontWeight = 'bold';
             app.Label.FontColor = [1 0.0745 0.651];
-            app.Label.Position = [211 743 101 22];
+            app.Label.Position = [278 743 101 22];
             app.Label.Text = 'S.A.N.T.I.A.';
 
             % Create SigMateAdvancedaNeuronalToolforIdentificationofArtifactsLabel
             app.SigMateAdvancedaNeuronalToolforIdentificationofArtifactsLabel = uilabel(app.UIFigure);
             app.SigMateAdvancedaNeuronalToolforIdentificationofArtifactsLabel.FontWeight = 'bold';
             app.SigMateAdvancedaNeuronalToolforIdentificationofArtifactsLabel.FontColor = [1 0.0745 0.651];
-            app.SigMateAdvancedaNeuronalToolforIdentificationofArtifactsLabel.Position = [70 722 383 22];
+            app.SigMateAdvancedaNeuronalToolforIdentificationofArtifactsLabel.Position = [137 722 383 22];
             app.SigMateAdvancedaNeuronalToolforIdentificationofArtifactsLabel.Text = 'SigMate Advanced: a  Neuronal Tool for Identification of Artifacts';
 
             % Create Image
             app.Image = uiimage(app.UIFigure);
-            app.Image.Position = [447 722 53 43];
+            app.Image.Position = [567 722 53 43];
             app.Image.ImageSource = 'Nottingham_Trent_University_shield.png';
 
             % Show the figure after all components are created
