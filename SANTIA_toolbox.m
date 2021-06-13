@@ -845,7 +845,14 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             net_1.divideParam.testRatio=app.TestEditField.Value;
             layers='created';%RAISE FLAG
             setappdata(0,'untrainednet',net_1)
-        elseif  value==3
+        elseif value ==3    
+            layers = [ ...
+            sequenceInputLayer(trainingcols)
+            lstmLayer(trainingcols,'OutputMode','last')
+            fullyConnectedLayer(2)
+            softmaxLayer
+            classificationLayer];
+        elseif  value==4
             [filename,pathname,filterindex] = uigetfile('*.mat');
             % if the user presses CANCEL then zero is returned so ensure character 
             % filename
@@ -889,7 +896,7 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             YPred(YPred < 0.5) = 0;
             tTst = response(:,info.testInd);
             setappdata(0,'testTRUElabels',tTst)
-            else    
+        elseif value ==1 || value ==4%%%%CNN    
             dataTraining=getappdata(0,'dataTraining');
             dataValidation=getappdata(0,'dataValidation');
             %%%%RESHAPE TRAINS FOR TRAINING
@@ -902,6 +909,7 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
             Y_v=categorical(dataValidation.Labels)';    %%%%%%%%%%TRANSPOSE TO FIT TABLE
             Valtab=table(X_v,Y_v);
             Valtab=table2cell(Valtab);
+        
             %%%%%%%LOAD OPTIONS
             if app.PlotCheckBox.Value==1
                 plotoption='training-progress';
@@ -941,6 +949,61 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
                 'MiniBatchSize',app.MiniBatchSizeSpinner.Value);
             setappdata(0,'testTRUElabels',Y_t)
             scores=scores(:,2);
+            
+         elseif value==3 %%%% LSTM 
+            dataTesting=getappdata(0,'dataTesting');
+            dataTraining=getappdata(0,'dataTraining');
+            dataValidation=getappdata(0,'dataValidation');
+            %%%%RESHAPE TRAINS FOR TRAINING
+            trainInd=table2array(dataTraining);
+            valInd=table2array(dataValidation);       
+            testInd=table2array(dataTesting);  
+            Y= categorical(trainInd(:,end));
+            Y_v= categorical(valInd(:,end));
+            Y_t= categorical(testInd(:,end));
+            X= num2cell(trainInd(:,1:(end-1)),2);
+            X_v= num2cell(valInd(:,1:(end-1)),2);
+            X_t= num2cell(testInd(:,1:(end-1)),2);
+            X = cellfun(@transpose,X,'UniformOutput',false);
+            X_v = cellfun(@transpose,X_v ,'UniformOutput',false);
+            X_t = cellfun(@transpose,X_t,'UniformOutput',false);
+            Valtab={X_v,Y_v};
+        
+            %%%%%%%LOAD OPTIONS
+            if app.PlotCheckBox.Value==1
+                plotoption='training-progress';
+            else
+                plotoption='none';
+            end
+            options = trainingOptions(app.SolverDropDown.Value , ...
+                'InitialLearnRate',app.InitialLearnRateSpinner.Value,...
+                'MaxEpochs',app.MaxEpochsSpinner.Value, ...
+                'MiniBatchSize',app.MiniBatchSizeSpinner.Value, ...
+                'ValidationFrequency',app.ValidationFrequencySpinner.Value,...
+                'ValidationData',Valtab,...
+                'InitialLearnRate',app.InitialLearnRateSpinner.Value, ...
+                'ExecutionEnvironment',app.ExecutionEnviromentDropDown.Value,...
+                'plots',plotoption, ...
+                'Verbose',app.VerboseCheckBox.Value,...
+                'VerboseFrequency', app.VerboseFrequencySpinner.Value, ...
+                'L2Regularization',app.L2RegularizationSpinner.Value,...
+                'GradientThresholdMethod',app.GradientThresholdMethodDropDown.Value,...
+                'ResetInputNormalization',app.ResetInputNormalizationCheckBox.Value,...
+                'GradientThreshold', app.GradientThresholdSpinner.Value,...
+                'ValidationPatience',app.ValidationPatienceSpinner.Value,...
+                'Shuffle',app.ShuffleDropDown.Value,...
+                'LearnRateSchedule',app.LearnRateScheduleDropDown.Value,...
+                'LearnRateDropFactor',app.LearnRateDropFactorSpinner.Value,...
+                'LearnRateDropPeriod',app.LearnRateDropPeriodSpinner.Value);
+            
+            %%%%%%%%%%TRAIN
+            [net,info] = trainNetwork(X,Y,Layers,options);
+            %%%%%%%%%%%TEST SET
+            [YPred,scores] = classify(net,X_t,...
+                'ExecutionEnvironment',app.ExecutionEnviromentDropDown.Value,...
+                'MiniBatchSize',app.MiniBatchSizeSpinner.Value);
+            setappdata(0,'testTRUElabels',Y_t)
+            scores=scores(:,2);    
         end
             app.Label_3.Text='Training Finished';
             setappdata(0,'trainednet',net)
@@ -2129,8 +2192,8 @@ classdef SANTIA_toolbox < matlab.apps.AppBase
 
             % Create ChooseNetworkDropDown_3
             app.ChooseNetworkDropDown_3 = uidropdown(app.NetworkTrainingPanel);
-            app.ChooseNetworkDropDown_3.Items = {'1D-CNN (prebuilt)', 'MLP (prebuilt)', 'Load Custom'};
-            app.ChooseNetworkDropDown_3.ItemsData = {'1', '2', '3'};
+            app.ChooseNetworkDropDown_3.Items = {'1D-CNN (prebuilt)', 'MLP (prebuilt)','LSTM (prebuilt)','Load Custom'};
+            app.ChooseNetworkDropDown_3.ItemsData = {'1', '2', '3','4'};
             app.ChooseNetworkDropDown_3.ValueChangedFcn = createCallbackFcn(app, @ChooseNetworkDropDown_3ValueChanged, true);
             app.ChooseNetworkDropDown_3.Tooltip = {'Choose a neural network model.'};
             app.ChooseNetworkDropDown_3.Position = [40 262 132 22];
